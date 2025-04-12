@@ -1,6 +1,10 @@
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
-const { findUser, createUser } = require("../prisma/queries/userQueries");
+const {
+  findUser,
+  createUser,
+  updateRefreshToken,
+} = require("../prisma/queries/userQueries");
 const passport = require("../utils/passportConfig");
 const jwt = require("jsonwebtoken");
 
@@ -64,29 +68,52 @@ const postLogin = [
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
-    passport.authenticate("local", { session: false }, (err, user, info) => {
-      if (err) return next(err);
-      if (!user) return res.status(401).json({ msg: info.message });
+    passport.authenticate(
+      "local",
+      { session: false },
+      async (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.status(401).json({ msg: info.message });
 
-      const token = jwt.sign(
-        { id: user.id, username: user.username },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "15s",
-        }
-      );
-      res.cookie("jwt", token, {
-        httpOnly: true,
-        secure: false, 
-        sameSite: "Strict", // or 'Lax' depending on your needs
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
-      });
-
-      return res.json({
-        msg: "succesfully logged in",
-        user,
-      });
-    })(req, res);
+        const token = jwt.sign(
+          { id: user.id, username: user.username },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "15m",
+          }
+        );
+        // refresh token
+        const refreshToken = jwt.sign(
+          { id: user.id, username: user.username },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "30d",
+          }
+        );
+        // update refresh token in db
+        await updateRefreshToken(user.id, refreshToken);
+        //  refresh cookie
+        return res
+          .cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "development" ? false : true,
+            sameSite:
+              process.env.NODE_ENV === "development" ? "strict" : "none",
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
+          })
+          .cookie("jwt", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "development" ? false : true,
+            sameSite:
+              process.env.NODE_ENV === "development" ? "strict" : "none", // or 'Lax' depending on your needs
+            maxAge: 15 * 60 * 1000, // 15m
+          })
+          .json({
+            msg: "successfully logged in",
+            user,
+          });
+      }
+    )(req, res);
   },
 ];
 

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const { PrismaClientKnownRequestError } = require("@prisma/client");
 
 // routers
 const { userRouter } = require("./routes/userRouter");

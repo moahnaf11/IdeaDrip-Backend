@@ -27,7 +27,19 @@ const createUser = async (email, hashedPassword, username) => {
   return user;
 };
 
+const updateRefreshToken = async (id, refresh) => {
+  const user = await prisma.user.update({
+    where: { id },
+    data: {
+      refreshToken: refresh,
+    },
+  });
+  console.log("user refresh token updated", user);
+  return user;
+};
+
 module.exports = {
   findUser,
   createUser,
+  updateRefreshToken
 };
