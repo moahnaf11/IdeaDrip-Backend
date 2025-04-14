@@ -1,3 +1,4 @@
+const { generateUsername } = require("../../utils/helperFunctions");
 const { prisma } = require("../prismaClient");
 
 // Find user by email or id
@@ -39,7 +40,10 @@ const createOAuthUser = async (profile) => {
     if (!user.googleId) {
       user = await prisma.user.update({
         where: { email },
-        data: { googleId },
+        data: {
+          googleId,
+          ...(user.photo ? {} : { photo: profile.photos?.[0]?.value }),
+        },
       });
     }
   } else {
@@ -48,7 +52,8 @@ const createOAuthUser = async (profile) => {
       data: {
         email,
         googleId,
-        username: profile.emails?.[0].value.split("@")[0],
+        username: generateUsername(profile),
+        photo: profile.photos?.[0]?.value,
       },
     });
   }
