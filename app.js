@@ -53,7 +53,6 @@ app.use((err, req, res, _next) => {
       });
     }
   } else {
-    res;
     res.status(500).json({
       statusCode: 500,
       errors: null,

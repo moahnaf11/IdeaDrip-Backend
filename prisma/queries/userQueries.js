@@ -27,6 +27,35 @@ const createUser = async (email, hashedPassword, username) => {
   return user;
 };
 
+// Create user through OAuth
+const createOAuthUser = async (profile) => {
+  const email = profile.emails?.[0]?.value;
+  const googleId = profile.id;
+
+  let user = await prisma.user.findUnique({ where: { email } });
+
+  if (user) {
+    // 2. If user exists but no googleId, update it
+    if (!user.googleId) {
+      user = await prisma.user.update({
+        where: { email },
+        data: { googleId },
+      });
+    }
+  } else {
+    // Else: acc doesnt exist
+    user = await prisma.user.create({
+      data: {
+        email,
+        googleId,
+        username: profile.emails?.[0].value.split("@")[0],
+      },
+    });
+  }
+  console.log("user with oauth", user);
+  return user;
+};
+
 const updateRefreshToken = async (id, refresh) => {
   const user = await prisma.user.update({
     where: { id },
@@ -42,4 +71,5 @@ module.exports = {
   findUser,
   createUser,
   updateRefreshToken,
+  createOAuthUser,
 };

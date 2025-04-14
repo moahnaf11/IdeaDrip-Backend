@@ -18,9 +18,10 @@ model User {
   id           String   @id @default(uuid())
   email        String   @unique
   username     String   @unique
-  password     String
+  password     String?
   createdAt    DateTime @default(now())
   refreshToken String?
+  googleId     String?  @unique
 
   @@map("users")
 }
