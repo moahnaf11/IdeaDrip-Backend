@@ -1,32 +1,32 @@
-// packages
+// Packages
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const { PrismaClientKnownRequestError } = require("@prisma/client");
 
-// routers
+// Routers
 const { userRouter } = require("./routes/userRouter");
 
 dotenv.config();
 const app = express();
 
-// middlewares
+// Middlewares
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routers
+// Routers
 app.use("/users", userRouter);
 
-// error handler middleware
-app.use((err, req, res, next) => {
+// Error handler middleware
+app.use((err, req, res, _next) => {
   // Log the error for details.
   console.error("An error occurred was encountered:", err);
   if (err instanceof PrismaClientKnownRequestError) {

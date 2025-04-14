@@ -72,7 +72,6 @@ const postLogin = [
       "local",
       { session: false },
       async (err, user, info) => {
-        if (err) return next(err);
         if (!user) return res.status(401).json({ msg: info.message });
 
         const token = jwt.sign(
@@ -80,7 +79,7 @@ const postLogin = [
           process.env.JWT_SECRET,
           {
             expiresIn: "15m",
-          }
+          },
         );
         // refresh token
         const refreshToken = jwt.sign(
@@ -88,7 +87,7 @@ const postLogin = [
           process.env.JWT_SECRET,
           {
             expiresIn: "30d",
-          }
+          },
         );
         // update refresh token in db
         await updateRefreshToken(user.id, refreshToken);
@@ -112,7 +111,7 @@ const postLogin = [
             msg: "successfully logged in",
             user,
           });
-      }
+      },
     )(req, res);
   },
 ];

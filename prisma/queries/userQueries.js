@@ -41,5 +41,5 @@ const updateRefreshToken = async (id, refresh) => {
 module.exports = {
   findUser,
   createUser,
-  updateRefreshToken
+  updateRefreshToken,
 };
