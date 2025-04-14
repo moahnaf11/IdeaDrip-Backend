@@ -15,7 +15,7 @@ userRouter.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.status(200).json({ user: req.user });
-  }
+  },
 );
 userRouter.get("/logout", async (req, res) => {
   const refreshToken = req.cookies["refreshToken"];
@@ -54,7 +54,7 @@ userRouter.get("/refresh", async (req, res) => {
     const newAccessToken = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "15m" },
     );
 
     return res

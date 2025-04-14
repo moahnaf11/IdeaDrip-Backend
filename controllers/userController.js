@@ -8,7 +8,7 @@ const {
 const passport = require("../utils/passportConfig");
 const jwt = require("jsonwebtoken");
 
-// register form validator
+// Register form validator
 const registerFormValidator = [
   body("email")
     .trim()
@@ -38,7 +38,7 @@ const registerFormValidator = [
     }),
 ];
 
-// login form validator
+// Login form validator
 const loginFormValidator = [
   body("email").trim().isEmail().withMessage("Please enter a valid email"),
   body("password")
@@ -81,7 +81,7 @@ const postLogin = [
             expiresIn: "15m",
           },
         );
-        // refresh token
+        // Refresh token
         const refreshToken = jwt.sign(
           { id: user.id, username: user.username },
           process.env.JWT_SECRET,
@@ -89,9 +89,9 @@ const postLogin = [
             expiresIn: "30d",
           },
         );
-        // update refresh token in db
+        // Update refresh token in db
         await updateRefreshToken(user.id, refreshToken);
-        //  refresh cookie
+        //  Refresh cookie
         return res
           .cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -104,7 +104,7 @@ const postLogin = [
             httpOnly: true,
             secure: process.env.NODE_ENV === "development" ? false : true,
             sameSite:
-              process.env.NODE_ENV === "development" ? "strict" : "none", // or 'Lax' depending on your needs
+              process.env.NODE_ENV === "development" ? "strict" : "none", // Or 'Lax' depending on your needs
             maxAge: 15 * 60 * 1000, // 15m
           })
           .json({

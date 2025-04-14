@@ -1,6 +1,6 @@
 const { prisma } = require("../prismaClient");
 
-// find user by email or id
+// Find user by email or id
 const findUser = async (id = null, email = null) => {
   if (email) {
     const user = await prisma.user.findUnique({ where: { email } });

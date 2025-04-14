@@ -1,5 +1,5 @@
 const { Strategy: LocalStrategy } = require("passport-local");
-const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
+const { Strategy: JwtStrategy } = require("passport-jwt");
 const passport = require("passport");
 const { findUser } = require("../prisma/queries/userQueries");
 const bcrypt = require("bcryptjs");
@@ -16,8 +16,8 @@ passport.use(
       if (!isMatch) return done(null, false, { message: "Incorrect password" });
 
       return done(null, user);
-    }
-  )
+    },
+  ),
 );
 
 const cookieExtractor = (req) => {
@@ -45,8 +45,8 @@ passport.use(
       } catch (err) {
         return done(err, false);
       }
-    }
-  )
+    },
+  ),
 );
 
 module.exports = passport;
