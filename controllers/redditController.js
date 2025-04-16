@@ -141,8 +141,43 @@ const fetchSubreddits = async (req, res) => {
   return res.json(result);
 };
 
+// Fetch specific subreddits
+const fetchSpecificSubs = async (req, res) => {
+  const query = req.query.q;
+
+  if (!query) {
+    return res.status(400).json({ error: "Missing search query" });
+  }
+
+  const response = await fetch(
+    `https://www.reddit.com/subreddits/search.json?q=${encodeURIComponent(query)}&limit=100`,
+  );
+  const data = await response.json();
+
+  // Extract and map relevant subreddit fields
+  const subreddits = data.data.children
+    .map((item) => {
+      const sub = item.data;
+      return {
+        name: sub.display_name,
+        title: sub.title,
+        subscribers: sub.subscribers,
+        icon: sub.icon_img || sub.community_icon || "",
+        description: sub.public_description,
+        url: `https://reddit.com${sub.url}`,
+      };
+    })
+    .filter(
+      (sub) =>
+        sub.title.toLowerCase().includes(query) ||
+        sub.description.toLowerCase().includes(query),
+    );
+
+  return res.json(subreddits);
+};
 module.exports = {
   getAccessToken,
   fetchPost,
   fetchSubreddits,
+  fetchSpecificSubs,
 };
