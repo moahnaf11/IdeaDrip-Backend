@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Audience
+ * 
+ */
+export type Audience = $Result.DefaultSelection<Prisma.$AudiencePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -153,6 +158,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.audience`: Exposes CRUD operations for the **Audience** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Audiences
+    * const audiences = await prisma.audience.findMany()
+    * ```
+    */
+  get audience(): Prisma.AudienceDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -593,7 +608,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    User: 'User'
+    User: 'User',
+    Audience: 'Audience'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -612,7 +628,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user"
+      modelProps: "user" | "audience"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -687,6 +703,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Audience: {
+        payload: Prisma.$AudiencePayload<ExtArgs>
+        fields: Prisma.AudienceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AudienceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AudienceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>
+          }
+          findFirst: {
+            args: Prisma.AudienceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AudienceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>
+          }
+          findMany: {
+            args: Prisma.AudienceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>[]
+          }
+          create: {
+            args: Prisma.AudienceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>
+          }
+          createMany: {
+            args: Prisma.AudienceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AudienceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>[]
+          }
+          delete: {
+            args: Prisma.AudienceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>
+          }
+          update: {
+            args: Prisma.AudienceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>
+          }
+          deleteMany: {
+            args: Prisma.AudienceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AudienceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AudienceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>[]
+          }
+          upsert: {
+            args: Prisma.AudienceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AudiencePayload>
+          }
+          aggregate: {
+            args: Prisma.AudienceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAudience>
+          }
+          groupBy: {
+            args: Prisma.AudienceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AudienceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AudienceCountArgs<ExtArgs>
+            result: $Utils.Optional<AudienceCountAggregateOutputType> | number
           }
         }
       }
@@ -775,6 +865,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    audience?: AudienceOmit
   }
 
   /* Types for Logging */
@@ -863,6 +954,36 @@ export namespace Prisma {
    * Count Types
    */
 
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    audiences: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    audiences?: boolean | UserCountOutputTypeCountAudiencesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAudiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AudienceWhereInput
+  }
 
 
   /**
@@ -1057,6 +1178,8 @@ export namespace Prisma {
     refreshToken?: boolean
     googleId?: boolean
     photo?: boolean
+    audiences?: boolean | User$audiencesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1093,10 +1216,18 @@ export namespace Prisma {
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "createdAt" | "refreshToken" | "googleId" | "photo", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    audiences?: boolean | User$audiencesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      audiences: Prisma.$AudiencePayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
@@ -1500,6 +1631,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    audiences<T extends User$audiencesArgs<ExtArgs> = {}>(args?: Subset<T, User$audiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1554,6 +1686,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1572,6 +1708,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1589,6 +1729,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1638,6 +1782,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1686,6 +1834,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1728,6 +1880,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to create a User.
      */
@@ -1776,6 +1932,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -1843,6 +2003,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -1869,6 +2033,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -1889,6 +2057,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.audiences
+   */
+  export type User$audiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    where?: AudienceWhereInput
+    orderBy?: AudienceOrderByWithRelationInput | AudienceOrderByWithRelationInput[]
+    cursor?: AudienceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AudienceScalarFieldEnum | AudienceScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1900,6 +2092,1064 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Audience
+   */
+
+  export type AggregateAudience = {
+    _count: AudienceCountAggregateOutputType | null
+    _min: AudienceMinAggregateOutputType | null
+    _max: AudienceMaxAggregateOutputType | null
+  }
+
+  export type AudienceMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    createdAt: Date | null
+    userId: string | null
+  }
+
+  export type AudienceMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    createdAt: Date | null
+    userId: string | null
+  }
+
+  export type AudienceCountAggregateOutputType = {
+    id: number
+    title: number
+    subreddits: number
+    createdAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type AudienceMinAggregateInputType = {
+    id?: true
+    title?: true
+    createdAt?: true
+    userId?: true
+  }
+
+  export type AudienceMaxAggregateInputType = {
+    id?: true
+    title?: true
+    createdAt?: true
+    userId?: true
+  }
+
+  export type AudienceCountAggregateInputType = {
+    id?: true
+    title?: true
+    subreddits?: true
+    createdAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type AudienceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Audience to aggregate.
+     */
+    where?: AudienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Audiences to fetch.
+     */
+    orderBy?: AudienceOrderByWithRelationInput | AudienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AudienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Audiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Audiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Audiences
+    **/
+    _count?: true | AudienceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AudienceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AudienceMaxAggregateInputType
+  }
+
+  export type GetAudienceAggregateType<T extends AudienceAggregateArgs> = {
+        [P in keyof T & keyof AggregateAudience]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAudience[P]>
+      : GetScalarType<T[P], AggregateAudience[P]>
+  }
+
+
+
+
+  export type AudienceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AudienceWhereInput
+    orderBy?: AudienceOrderByWithAggregationInput | AudienceOrderByWithAggregationInput[]
+    by: AudienceScalarFieldEnum[] | AudienceScalarFieldEnum
+    having?: AudienceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AudienceCountAggregateInputType | true
+    _min?: AudienceMinAggregateInputType
+    _max?: AudienceMaxAggregateInputType
+  }
+
+  export type AudienceGroupByOutputType = {
+    id: string
+    title: string
+    subreddits: string[]
+    createdAt: Date
+    userId: string
+    _count: AudienceCountAggregateOutputType | null
+    _min: AudienceMinAggregateOutputType | null
+    _max: AudienceMaxAggregateOutputType | null
+  }
+
+  type GetAudienceGroupByPayload<T extends AudienceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AudienceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AudienceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AudienceGroupByOutputType[P]>
+            : GetScalarType<T[P], AudienceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AudienceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    subreddits?: boolean
+    createdAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["audience"]>
+
+  export type AudienceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    subreddits?: boolean
+    createdAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["audience"]>
+
+  export type AudienceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    subreddits?: boolean
+    createdAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["audience"]>
+
+  export type AudienceSelectScalar = {
+    id?: boolean
+    title?: boolean
+    subreddits?: boolean
+    createdAt?: boolean
+    userId?: boolean
+  }
+
+  export type AudienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "subreddits" | "createdAt" | "userId", ExtArgs["result"]["audience"]>
+  export type AudienceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AudienceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AudienceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AudiencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Audience"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      subreddits: string[]
+      createdAt: Date
+      userId: string
+    }, ExtArgs["result"]["audience"]>
+    composites: {}
+  }
+
+  type AudienceGetPayload<S extends boolean | null | undefined | AudienceDefaultArgs> = $Result.GetResult<Prisma.$AudiencePayload, S>
+
+  type AudienceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AudienceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AudienceCountAggregateInputType | true
+    }
+
+  export interface AudienceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Audience'], meta: { name: 'Audience' } }
+    /**
+     * Find zero or one Audience that matches the filter.
+     * @param {AudienceFindUniqueArgs} args - Arguments to find a Audience
+     * @example
+     * // Get one Audience
+     * const audience = await prisma.audience.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AudienceFindUniqueArgs>(args: SelectSubset<T, AudienceFindUniqueArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Audience that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AudienceFindUniqueOrThrowArgs} args - Arguments to find a Audience
+     * @example
+     * // Get one Audience
+     * const audience = await prisma.audience.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AudienceFindUniqueOrThrowArgs>(args: SelectSubset<T, AudienceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Audience that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceFindFirstArgs} args - Arguments to find a Audience
+     * @example
+     * // Get one Audience
+     * const audience = await prisma.audience.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AudienceFindFirstArgs>(args?: SelectSubset<T, AudienceFindFirstArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Audience that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceFindFirstOrThrowArgs} args - Arguments to find a Audience
+     * @example
+     * // Get one Audience
+     * const audience = await prisma.audience.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AudienceFindFirstOrThrowArgs>(args?: SelectSubset<T, AudienceFindFirstOrThrowArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Audiences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Audiences
+     * const audiences = await prisma.audience.findMany()
+     * 
+     * // Get first 10 Audiences
+     * const audiences = await prisma.audience.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const audienceWithIdOnly = await prisma.audience.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AudienceFindManyArgs>(args?: SelectSubset<T, AudienceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Audience.
+     * @param {AudienceCreateArgs} args - Arguments to create a Audience.
+     * @example
+     * // Create one Audience
+     * const Audience = await prisma.audience.create({
+     *   data: {
+     *     // ... data to create a Audience
+     *   }
+     * })
+     * 
+     */
+    create<T extends AudienceCreateArgs>(args: SelectSubset<T, AudienceCreateArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Audiences.
+     * @param {AudienceCreateManyArgs} args - Arguments to create many Audiences.
+     * @example
+     * // Create many Audiences
+     * const audience = await prisma.audience.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AudienceCreateManyArgs>(args?: SelectSubset<T, AudienceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Audiences and returns the data saved in the database.
+     * @param {AudienceCreateManyAndReturnArgs} args - Arguments to create many Audiences.
+     * @example
+     * // Create many Audiences
+     * const audience = await prisma.audience.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Audiences and only return the `id`
+     * const audienceWithIdOnly = await prisma.audience.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AudienceCreateManyAndReturnArgs>(args?: SelectSubset<T, AudienceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Audience.
+     * @param {AudienceDeleteArgs} args - Arguments to delete one Audience.
+     * @example
+     * // Delete one Audience
+     * const Audience = await prisma.audience.delete({
+     *   where: {
+     *     // ... filter to delete one Audience
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AudienceDeleteArgs>(args: SelectSubset<T, AudienceDeleteArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Audience.
+     * @param {AudienceUpdateArgs} args - Arguments to update one Audience.
+     * @example
+     * // Update one Audience
+     * const audience = await prisma.audience.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AudienceUpdateArgs>(args: SelectSubset<T, AudienceUpdateArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Audiences.
+     * @param {AudienceDeleteManyArgs} args - Arguments to filter Audiences to delete.
+     * @example
+     * // Delete a few Audiences
+     * const { count } = await prisma.audience.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AudienceDeleteManyArgs>(args?: SelectSubset<T, AudienceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Audiences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Audiences
+     * const audience = await prisma.audience.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AudienceUpdateManyArgs>(args: SelectSubset<T, AudienceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Audiences and returns the data updated in the database.
+     * @param {AudienceUpdateManyAndReturnArgs} args - Arguments to update many Audiences.
+     * @example
+     * // Update many Audiences
+     * const audience = await prisma.audience.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Audiences and only return the `id`
+     * const audienceWithIdOnly = await prisma.audience.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AudienceUpdateManyAndReturnArgs>(args: SelectSubset<T, AudienceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Audience.
+     * @param {AudienceUpsertArgs} args - Arguments to update or create a Audience.
+     * @example
+     * // Update or create a Audience
+     * const audience = await prisma.audience.upsert({
+     *   create: {
+     *     // ... data to create a Audience
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Audience we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AudienceUpsertArgs>(args: SelectSubset<T, AudienceUpsertArgs<ExtArgs>>): Prisma__AudienceClient<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Audiences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceCountArgs} args - Arguments to filter Audiences to count.
+     * @example
+     * // Count the number of Audiences
+     * const count = await prisma.audience.count({
+     *   where: {
+     *     // ... the filter for the Audiences we want to count
+     *   }
+     * })
+    **/
+    count<T extends AudienceCountArgs>(
+      args?: Subset<T, AudienceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AudienceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Audience.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AudienceAggregateArgs>(args: Subset<T, AudienceAggregateArgs>): Prisma.PrismaPromise<GetAudienceAggregateType<T>>
+
+    /**
+     * Group by Audience.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AudienceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AudienceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AudienceGroupByArgs['orderBy'] }
+        : { orderBy?: AudienceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AudienceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAudienceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Audience model
+   */
+  readonly fields: AudienceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Audience.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AudienceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Audience model
+   */ 
+  interface AudienceFieldRefs {
+    readonly id: FieldRef<"Audience", 'String'>
+    readonly title: FieldRef<"Audience", 'String'>
+    readonly subreddits: FieldRef<"Audience", 'String[]'>
+    readonly createdAt: FieldRef<"Audience", 'DateTime'>
+    readonly userId: FieldRef<"Audience", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Audience findUnique
+   */
+  export type AudienceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * Filter, which Audience to fetch.
+     */
+    where: AudienceWhereUniqueInput
+  }
+
+  /**
+   * Audience findUniqueOrThrow
+   */
+  export type AudienceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * Filter, which Audience to fetch.
+     */
+    where: AudienceWhereUniqueInput
+  }
+
+  /**
+   * Audience findFirst
+   */
+  export type AudienceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * Filter, which Audience to fetch.
+     */
+    where?: AudienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Audiences to fetch.
+     */
+    orderBy?: AudienceOrderByWithRelationInput | AudienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Audiences.
+     */
+    cursor?: AudienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Audiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Audiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Audiences.
+     */
+    distinct?: AudienceScalarFieldEnum | AudienceScalarFieldEnum[]
+  }
+
+  /**
+   * Audience findFirstOrThrow
+   */
+  export type AudienceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * Filter, which Audience to fetch.
+     */
+    where?: AudienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Audiences to fetch.
+     */
+    orderBy?: AudienceOrderByWithRelationInput | AudienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Audiences.
+     */
+    cursor?: AudienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Audiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Audiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Audiences.
+     */
+    distinct?: AudienceScalarFieldEnum | AudienceScalarFieldEnum[]
+  }
+
+  /**
+   * Audience findMany
+   */
+  export type AudienceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * Filter, which Audiences to fetch.
+     */
+    where?: AudienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Audiences to fetch.
+     */
+    orderBy?: AudienceOrderByWithRelationInput | AudienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Audiences.
+     */
+    cursor?: AudienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Audiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Audiences.
+     */
+    skip?: number
+    distinct?: AudienceScalarFieldEnum | AudienceScalarFieldEnum[]
+  }
+
+  /**
+   * Audience create
+   */
+  export type AudienceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Audience.
+     */
+    data: XOR<AudienceCreateInput, AudienceUncheckedCreateInput>
+  }
+
+  /**
+   * Audience createMany
+   */
+  export type AudienceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Audiences.
+     */
+    data: AudienceCreateManyInput | AudienceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Audience createManyAndReturn
+   */
+  export type AudienceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * The data used to create many Audiences.
+     */
+    data: AudienceCreateManyInput | AudienceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Audience update
+   */
+  export type AudienceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Audience.
+     */
+    data: XOR<AudienceUpdateInput, AudienceUncheckedUpdateInput>
+    /**
+     * Choose, which Audience to update.
+     */
+    where: AudienceWhereUniqueInput
+  }
+
+  /**
+   * Audience updateMany
+   */
+  export type AudienceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Audiences.
+     */
+    data: XOR<AudienceUpdateManyMutationInput, AudienceUncheckedUpdateManyInput>
+    /**
+     * Filter which Audiences to update
+     */
+    where?: AudienceWhereInput
+    /**
+     * Limit how many Audiences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Audience updateManyAndReturn
+   */
+  export type AudienceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * The data used to update Audiences.
+     */
+    data: XOR<AudienceUpdateManyMutationInput, AudienceUncheckedUpdateManyInput>
+    /**
+     * Filter which Audiences to update
+     */
+    where?: AudienceWhereInput
+    /**
+     * Limit how many Audiences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Audience upsert
+   */
+  export type AudienceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Audience to update in case it exists.
+     */
+    where: AudienceWhereUniqueInput
+    /**
+     * In case the Audience found by the `where` argument doesn't exist, create a new Audience with this data.
+     */
+    create: XOR<AudienceCreateInput, AudienceUncheckedCreateInput>
+    /**
+     * In case the Audience was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AudienceUpdateInput, AudienceUncheckedUpdateInput>
+  }
+
+  /**
+   * Audience delete
+   */
+  export type AudienceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    /**
+     * Filter which Audience to delete.
+     */
+    where: AudienceWhereUniqueInput
+  }
+
+  /**
+   * Audience deleteMany
+   */
+  export type AudienceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Audiences to delete
+     */
+    where?: AudienceWhereInput
+    /**
+     * Limit how many Audiences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Audience without action
+   */
+  export type AudienceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
   }
 
 
@@ -1929,6 +3179,17 @@ export namespace Prisma {
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const AudienceScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    subreddits: 'subreddits',
+    createdAt: 'createdAt',
+    userId: 'userId'
+  };
+
+  export type AudienceScalarFieldEnum = (typeof AudienceScalarFieldEnum)[keyof typeof AudienceScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2017,6 +3278,7 @@ export namespace Prisma {
     refreshToken?: StringNullableFilter<"User"> | string | null
     googleId?: StringNullableFilter<"User"> | string | null
     photo?: StringNullableFilter<"User"> | string | null
+    audiences?: AudienceListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -2028,6 +3290,7 @@ export namespace Prisma {
     refreshToken?: SortOrderInput | SortOrder
     googleId?: SortOrderInput | SortOrder
     photo?: SortOrderInput | SortOrder
+    audiences?: AudienceOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -2042,6 +3305,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     refreshToken?: StringNullableFilter<"User"> | string | null
     photo?: StringNullableFilter<"User"> | string | null
+    audiences?: AudienceListRelationFilter
   }, "id" | "email" | "username" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -2072,6 +3336,61 @@ export namespace Prisma {
     photo?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
+  export type AudienceWhereInput = {
+    AND?: AudienceWhereInput | AudienceWhereInput[]
+    OR?: AudienceWhereInput[]
+    NOT?: AudienceWhereInput | AudienceWhereInput[]
+    id?: StringFilter<"Audience"> | string
+    title?: StringFilter<"Audience"> | string
+    subreddits?: StringNullableListFilter<"Audience">
+    createdAt?: DateTimeFilter<"Audience"> | Date | string
+    userId?: StringFilter<"Audience"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type AudienceOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subreddits?: SortOrder
+    createdAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type AudienceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AudienceWhereInput | AudienceWhereInput[]
+    OR?: AudienceWhereInput[]
+    NOT?: AudienceWhereInput | AudienceWhereInput[]
+    title?: StringFilter<"Audience"> | string
+    subreddits?: StringNullableListFilter<"Audience">
+    createdAt?: DateTimeFilter<"Audience"> | Date | string
+    userId?: StringFilter<"Audience"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type AudienceOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subreddits?: SortOrder
+    createdAt?: SortOrder
+    userId?: SortOrder
+    _count?: AudienceCountOrderByAggregateInput
+    _max?: AudienceMaxOrderByAggregateInput
+    _min?: AudienceMinOrderByAggregateInput
+  }
+
+  export type AudienceScalarWhereWithAggregatesInput = {
+    AND?: AudienceScalarWhereWithAggregatesInput | AudienceScalarWhereWithAggregatesInput[]
+    OR?: AudienceScalarWhereWithAggregatesInput[]
+    NOT?: AudienceScalarWhereWithAggregatesInput | AudienceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Audience"> | string
+    title?: StringWithAggregatesFilter<"Audience"> | string
+    subreddits?: StringNullableListFilter<"Audience">
+    createdAt?: DateTimeWithAggregatesFilter<"Audience"> | Date | string
+    userId?: StringWithAggregatesFilter<"Audience"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -2081,6 +3400,7 @@ export namespace Prisma {
     refreshToken?: string | null
     googleId?: string | null
     photo?: string | null
+    audiences?: AudienceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -2092,6 +3412,7 @@ export namespace Prisma {
     refreshToken?: string | null
     googleId?: string | null
     photo?: string | null
+    audiences?: AudienceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -2103,6 +3424,7 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
     photo?: NullableStringFieldUpdateOperationsInput | string | null
+    audiences?: AudienceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -2114,6 +3436,7 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
     photo?: NullableStringFieldUpdateOperationsInput | string | null
+    audiences?: AudienceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -2147,6 +3470,61 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     googleId?: NullableStringFieldUpdateOperationsInput | string | null
     photo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AudienceCreateInput = {
+    id?: string
+    title: string
+    subreddits?: AudienceCreatesubredditsInput | string[]
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutAudiencesInput
+  }
+
+  export type AudienceUncheckedCreateInput = {
+    id?: string
+    title: string
+    subreddits?: AudienceCreatesubredditsInput | string[]
+    createdAt?: Date | string
+    userId: string
+  }
+
+  export type AudienceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAudiencesNestedInput
+  }
+
+  export type AudienceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AudienceCreateManyInput = {
+    id?: string
+    title: string
+    subreddits?: AudienceCreatesubredditsInput | string[]
+    createdAt?: Date | string
+    userId: string
+  }
+
+  export type AudienceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AudienceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2190,9 +3568,19 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type AudienceListRelationFilter = {
+    every?: AudienceWhereInput
+    some?: AudienceWhereInput
+    none?: AudienceWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type AudienceOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -2278,6 +3666,55 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type AudienceCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subreddits?: SortOrder
+    createdAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AudienceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AudienceMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AudienceCreateNestedManyWithoutUserInput = {
+    create?: XOR<AudienceCreateWithoutUserInput, AudienceUncheckedCreateWithoutUserInput> | AudienceCreateWithoutUserInput[] | AudienceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutUserInput | AudienceCreateOrConnectWithoutUserInput[]
+    createMany?: AudienceCreateManyUserInputEnvelope
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+  }
+
+  export type AudienceUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AudienceCreateWithoutUserInput, AudienceUncheckedCreateWithoutUserInput> | AudienceCreateWithoutUserInput[] | AudienceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutUserInput | AudienceCreateOrConnectWithoutUserInput[]
+    createMany?: AudienceCreateManyUserInputEnvelope
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2288,6 +3725,57 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type AudienceUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AudienceCreateWithoutUserInput, AudienceUncheckedCreateWithoutUserInput> | AudienceCreateWithoutUserInput[] | AudienceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutUserInput | AudienceCreateOrConnectWithoutUserInput[]
+    upsert?: AudienceUpsertWithWhereUniqueWithoutUserInput | AudienceUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AudienceCreateManyUserInputEnvelope
+    set?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    disconnect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    delete?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    update?: AudienceUpdateWithWhereUniqueWithoutUserInput | AudienceUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AudienceUpdateManyWithWhereWithoutUserInput | AudienceUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
+  }
+
+  export type AudienceUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AudienceCreateWithoutUserInput, AudienceUncheckedCreateWithoutUserInput> | AudienceCreateWithoutUserInput[] | AudienceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutUserInput | AudienceCreateOrConnectWithoutUserInput[]
+    upsert?: AudienceUpsertWithWhereUniqueWithoutUserInput | AudienceUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AudienceCreateManyUserInputEnvelope
+    set?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    disconnect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    delete?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    update?: AudienceUpdateWithWhereUniqueWithoutUserInput | AudienceUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AudienceUpdateManyWithWhereWithoutUserInput | AudienceUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
+  }
+
+  export type AudienceCreatesubredditsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutAudiencesInput = {
+    create?: XOR<UserCreateWithoutAudiencesInput, UserUncheckedCreateWithoutAudiencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAudiencesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AudienceUpdatesubredditsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutAudiencesNestedInput = {
+    create?: XOR<UserCreateWithoutAudiencesInput, UserUncheckedCreateWithoutAudiencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAudiencesInput
+    upsert?: UserUpsertWithoutAudiencesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAudiencesInput, UserUpdateWithoutAudiencesInput>, UserUncheckedUpdateWithoutAudiencesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2397,6 +3885,145 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type AudienceCreateWithoutUserInput = {
+    id?: string
+    title: string
+    subreddits?: AudienceCreatesubredditsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type AudienceUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    subreddits?: AudienceCreatesubredditsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type AudienceCreateOrConnectWithoutUserInput = {
+    where: AudienceWhereUniqueInput
+    create: XOR<AudienceCreateWithoutUserInput, AudienceUncheckedCreateWithoutUserInput>
+  }
+
+  export type AudienceCreateManyUserInputEnvelope = {
+    data: AudienceCreateManyUserInput | AudienceCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AudienceUpsertWithWhereUniqueWithoutUserInput = {
+    where: AudienceWhereUniqueInput
+    update: XOR<AudienceUpdateWithoutUserInput, AudienceUncheckedUpdateWithoutUserInput>
+    create: XOR<AudienceCreateWithoutUserInput, AudienceUncheckedCreateWithoutUserInput>
+  }
+
+  export type AudienceUpdateWithWhereUniqueWithoutUserInput = {
+    where: AudienceWhereUniqueInput
+    data: XOR<AudienceUpdateWithoutUserInput, AudienceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AudienceUpdateManyWithWhereWithoutUserInput = {
+    where: AudienceScalarWhereInput
+    data: XOR<AudienceUpdateManyMutationInput, AudienceUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AudienceScalarWhereInput = {
+    AND?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
+    OR?: AudienceScalarWhereInput[]
+    NOT?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
+    id?: StringFilter<"Audience"> | string
+    title?: StringFilter<"Audience"> | string
+    subreddits?: StringNullableListFilter<"Audience">
+    createdAt?: DateTimeFilter<"Audience"> | Date | string
+    userId?: StringFilter<"Audience"> | string
+  }
+
+  export type UserCreateWithoutAudiencesInput = {
+    id?: string
+    email: string
+    username: string
+    password?: string | null
+    createdAt?: Date | string
+    refreshToken?: string | null
+    googleId?: string | null
+    photo?: string | null
+  }
+
+  export type UserUncheckedCreateWithoutAudiencesInput = {
+    id?: string
+    email: string
+    username: string
+    password?: string | null
+    createdAt?: Date | string
+    refreshToken?: string | null
+    googleId?: string | null
+    photo?: string | null
+  }
+
+  export type UserCreateOrConnectWithoutAudiencesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAudiencesInput, UserUncheckedCreateWithoutAudiencesInput>
+  }
+
+  export type UserUpsertWithoutAudiencesInput = {
+    update: XOR<UserUpdateWithoutAudiencesInput, UserUncheckedUpdateWithoutAudiencesInput>
+    create: XOR<UserCreateWithoutAudiencesInput, UserUncheckedCreateWithoutAudiencesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAudiencesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAudiencesInput, UserUncheckedUpdateWithoutAudiencesInput>
+  }
+
+  export type UserUpdateWithoutAudiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    photo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUncheckedUpdateWithoutAudiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    photo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AudienceCreateManyUserInput = {
+    id?: string
+    title: string
+    subreddits?: AudienceCreatesubredditsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type AudienceUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AudienceUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AudienceUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subreddits?: AudienceUpdatesubredditsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

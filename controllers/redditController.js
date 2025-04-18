@@ -129,7 +129,8 @@ const fetchSubreddits = async (req, res) => {
       name: child.data.display_name,
       title: child.data.title,
       subscribers: child.data.subscribers,
-      icon: child.data.icon_img || child.data.community_icon || "",
+      icon:
+        child.data.icon_img || child.data.community_icon || "".split("?")[0],
       url: `https://reddit.com${child.data.url}`,
     })) || [];
 
@@ -143,6 +144,8 @@ const fetchSubreddits = async (req, res) => {
 
 // Fetch specific subreddits
 const fetchSpecificSubs = async (req, res) => {
+  const token = await getAccessToken();
+
   const query = req.query.q;
 
   if (!query) {
@@ -150,7 +153,13 @@ const fetchSpecificSubs = async (req, res) => {
   }
 
   const response = await fetch(
-    `https://www.reddit.com/subreddits/search.json?q=${encodeURIComponent(query)}&limit=100`,
+    `https://oauth.reddit.com/subreddits/search?q=${encodeURIComponent(query)}&limit=100`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "User-Agent": userAgent,
+      },
+    },
   );
   const data = await response.json();
 
@@ -162,7 +171,7 @@ const fetchSpecificSubs = async (req, res) => {
         name: sub.display_name,
         title: sub.title,
         subscribers: sub.subscribers,
-        icon: sub.icon_img || sub.community_icon || "",
+        icon: sub.icon_img || sub.community_icon || "".split("?")[0],
         description: sub.public_description,
         url: `https://reddit.com${sub.url}`,
       };

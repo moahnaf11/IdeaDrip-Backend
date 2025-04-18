@@ -128,6 +128,14 @@ exports.Prisma.UserScalarFieldEnum = {
   photo: 'photo'
 };
 
+exports.Prisma.AudienceScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subreddits: 'subreddits',
+  createdAt: 'createdAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -145,7 +153,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Audience: 'Audience'
 };
 
 /**

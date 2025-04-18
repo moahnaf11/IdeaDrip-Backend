@@ -15,14 +15,26 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  username     String   @unique
+  id           String     @id @default(uuid())
+  email        String     @unique
+  username     String     @unique
   password     String?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime   @default(now())
   refreshToken String?
-  googleId     String?  @unique
+  googleId     String?    @unique
   photo        String?
+  audiences    Audience[]
 
   @@map("users")
+}
+
+model Audience {
+  id         String   @id @default(uuid())
+  title      String
+  subreddits String[]
+  createdAt  DateTime @default(now())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("audiences")
 }
