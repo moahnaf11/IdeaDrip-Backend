@@ -2112,6 +2112,7 @@ export namespace Prisma {
   export type AudienceMinAggregateOutputType = {
     id: string | null
     title: string | null
+    searchTerm: string | null
     createdAt: Date | null
     userId: string | null
   }
@@ -2119,6 +2120,7 @@ export namespace Prisma {
   export type AudienceMaxAggregateOutputType = {
     id: string | null
     title: string | null
+    searchTerm: string | null
     createdAt: Date | null
     userId: string | null
   }
@@ -2126,6 +2128,7 @@ export namespace Prisma {
   export type AudienceCountAggregateOutputType = {
     id: number
     title: number
+    searchTerm: number
     subreddits: number
     createdAt: number
     userId: number
@@ -2136,6 +2139,7 @@ export namespace Prisma {
   export type AudienceMinAggregateInputType = {
     id?: true
     title?: true
+    searchTerm?: true
     createdAt?: true
     userId?: true
   }
@@ -2143,6 +2147,7 @@ export namespace Prisma {
   export type AudienceMaxAggregateInputType = {
     id?: true
     title?: true
+    searchTerm?: true
     createdAt?: true
     userId?: true
   }
@@ -2150,6 +2155,7 @@ export namespace Prisma {
   export type AudienceCountAggregateInputType = {
     id?: true
     title?: true
+    searchTerm?: true
     subreddits?: true
     createdAt?: true
     userId?: true
@@ -2231,6 +2237,7 @@ export namespace Prisma {
   export type AudienceGroupByOutputType = {
     id: string
     title: string
+    searchTerm: string
     subreddits: string[]
     createdAt: Date
     userId: string
@@ -2256,6 +2263,7 @@ export namespace Prisma {
   export type AudienceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    searchTerm?: boolean
     subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
@@ -2265,6 +2273,7 @@ export namespace Prisma {
   export type AudienceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    searchTerm?: boolean
     subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
@@ -2274,6 +2283,7 @@ export namespace Prisma {
   export type AudienceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    searchTerm?: boolean
     subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
@@ -2283,12 +2293,13 @@ export namespace Prisma {
   export type AudienceSelectScalar = {
     id?: boolean
     title?: boolean
+    searchTerm?: boolean
     subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
   }
 
-  export type AudienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "subreddits" | "createdAt" | "userId", ExtArgs["result"]["audience"]>
+  export type AudienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "searchTerm" | "subreddits" | "createdAt" | "userId", ExtArgs["result"]["audience"]>
   export type AudienceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2307,6 +2318,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
+      searchTerm: string
       subreddits: string[]
       createdAt: Date
       userId: string
@@ -2736,6 +2748,7 @@ export namespace Prisma {
   interface AudienceFieldRefs {
     readonly id: FieldRef<"Audience", 'String'>
     readonly title: FieldRef<"Audience", 'String'>
+    readonly searchTerm: FieldRef<"Audience", 'String'>
     readonly subreddits: FieldRef<"Audience", 'String[]'>
     readonly createdAt: FieldRef<"Audience", 'DateTime'>
     readonly userId: FieldRef<"Audience", 'String'>
@@ -3184,6 +3197,7 @@ export namespace Prisma {
   export const AudienceScalarFieldEnum: {
     id: 'id',
     title: 'title',
+    searchTerm: 'searchTerm',
     subreddits: 'subreddits',
     createdAt: 'createdAt',
     userId: 'userId'
@@ -3342,6 +3356,7 @@ export namespace Prisma {
     NOT?: AudienceWhereInput | AudienceWhereInput[]
     id?: StringFilter<"Audience"> | string
     title?: StringFilter<"Audience"> | string
+    searchTerm?: StringFilter<"Audience"> | string
     subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeFilter<"Audience"> | Date | string
     userId?: StringFilter<"Audience"> | string
@@ -3351,6 +3366,7 @@ export namespace Prisma {
   export type AudienceOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
+    searchTerm?: SortOrder
     subreddits?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
@@ -3363,6 +3379,7 @@ export namespace Prisma {
     OR?: AudienceWhereInput[]
     NOT?: AudienceWhereInput | AudienceWhereInput[]
     title?: StringFilter<"Audience"> | string
+    searchTerm?: StringFilter<"Audience"> | string
     subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeFilter<"Audience"> | Date | string
     userId?: StringFilter<"Audience"> | string
@@ -3372,6 +3389,7 @@ export namespace Prisma {
   export type AudienceOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
+    searchTerm?: SortOrder
     subreddits?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
@@ -3386,6 +3404,7 @@ export namespace Prisma {
     NOT?: AudienceScalarWhereWithAggregatesInput | AudienceScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Audience"> | string
     title?: StringWithAggregatesFilter<"Audience"> | string
+    searchTerm?: StringWithAggregatesFilter<"Audience"> | string
     subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeWithAggregatesFilter<"Audience"> | Date | string
     userId?: StringWithAggregatesFilter<"Audience"> | string
@@ -3475,6 +3494,7 @@ export namespace Prisma {
   export type AudienceCreateInput = {
     id?: string
     title: string
+    searchTerm?: string
     subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutAudiencesInput
@@ -3483,6 +3503,7 @@ export namespace Prisma {
   export type AudienceUncheckedCreateInput = {
     id?: string
     title: string
+    searchTerm?: string
     subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
     userId: string
@@ -3491,6 +3512,7 @@ export namespace Prisma {
   export type AudienceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAudiencesNestedInput
@@ -3499,6 +3521,7 @@ export namespace Prisma {
   export type AudienceUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -3507,6 +3530,7 @@ export namespace Prisma {
   export type AudienceCreateManyInput = {
     id?: string
     title: string
+    searchTerm?: string
     subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
     userId: string
@@ -3515,6 +3539,7 @@ export namespace Prisma {
   export type AudienceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3522,6 +3547,7 @@ export namespace Prisma {
   export type AudienceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -3682,6 +3708,7 @@ export namespace Prisma {
   export type AudienceCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    searchTerm?: SortOrder
     subreddits?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
@@ -3690,6 +3717,7 @@ export namespace Prisma {
   export type AudienceMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    searchTerm?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
   }
@@ -3697,6 +3725,7 @@ export namespace Prisma {
   export type AudienceMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    searchTerm?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
   }
@@ -3890,6 +3919,7 @@ export namespace Prisma {
   export type AudienceCreateWithoutUserInput = {
     id?: string
     title: string
+    searchTerm?: string
     subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
   }
@@ -3897,6 +3927,7 @@ export namespace Prisma {
   export type AudienceUncheckedCreateWithoutUserInput = {
     id?: string
     title: string
+    searchTerm?: string
     subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
   }
@@ -3933,6 +3964,7 @@ export namespace Prisma {
     NOT?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
     id?: StringFilter<"Audience"> | string
     title?: StringFilter<"Audience"> | string
+    searchTerm?: StringFilter<"Audience"> | string
     subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeFilter<"Audience"> | Date | string
     userId?: StringFilter<"Audience"> | string
@@ -4001,6 +4033,7 @@ export namespace Prisma {
   export type AudienceCreateManyUserInput = {
     id?: string
     title: string
+    searchTerm?: string
     subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
   }
@@ -4008,6 +4041,7 @@ export namespace Prisma {
   export type AudienceUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4015,6 +4049,7 @@ export namespace Prisma {
   export type AudienceUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4022,6 +4057,7 @@ export namespace Prisma {
   export type AudienceUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
     subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

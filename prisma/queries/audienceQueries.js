@@ -1,11 +1,12 @@
 const { prisma } = require("../prismaClient");
 
-const createAud = async (title, subreddits, userId) => {
+const createAud = async (title, subreddits, userId, searchTerm) => {
   const audience = await prisma.audience.create({
     data: {
       title,
       subreddits,
       userId,
+      searchTerm,
     },
   });
 
@@ -25,4 +26,28 @@ const getOneAudience = async (id) => {
   return audience;
 };
 
-module.exports = { createAud, getAllAudiences, getOneAudience };
+const delAud = async (id) => {
+  const audience = await prisma.audience.delete({
+    where: { id },
+  });
+  console.log("deleted audience", audience);
+  return audience;
+};
+
+const updateAud = async (id, title, subreddits) => {
+  const audience = await prisma.audience.update({
+    where: { id },
+    data: { title, subreddits },
+  });
+
+  console.log("updated audience", audience);
+  return audience;
+};
+
+module.exports = {
+  createAud,
+  getAllAudiences,
+  getOneAudience,
+  delAud,
+  updateAud,
+};

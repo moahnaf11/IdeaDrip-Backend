@@ -3,6 +3,8 @@ const {
   createAudience,
   getAudiences,
   getSingleAudience,
+  deleteAudience,
+  updateAudience,
 } = require("../controllers/audienceController");
 const passport = require("../utils/passportConfig");
 
@@ -11,7 +13,11 @@ audienceRouter
   .route("/")
   .post(passport.authenticate("jwt", { session: false }), createAudience)
   .get(passport.authenticate("jwt", { session: false }), getAudiences);
-audienceRouter.get("/:id", getSingleAudience);
+audienceRouter
+  .route("/:id")
+  .get(getSingleAudience)
+  .delete(deleteAudience)
+  .put(updateAudience);
 
 module.exports = {
   audienceRouter,

@@ -131,6 +131,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.AudienceScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  searchTerm: 'searchTerm',
   subreddits: 'subreddits',
   createdAt: 'createdAt',
   userId: 'userId'

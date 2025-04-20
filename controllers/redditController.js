@@ -62,6 +62,7 @@ const fetchPost = async (req, res) => {
     );
 
     const data = await redditRes.json();
+
     console.log("reddit res", data.data.children.length);
     const filteredPosts = data.data.children
       .filter((post) => {
