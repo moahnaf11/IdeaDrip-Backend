@@ -19,4 +19,10 @@ const getAllAudiences = async (userId) => {
   return audiences;
 };
 
-module.exports = { createAud, getAllAudiences };
+const getOneAudience = async (id) => {
+  const audience = await prisma.audience.findUnique({ where: { id } });
+  console.log("single audience", audience);
+  return audience;
+};
+
+module.exports = { createAud, getAllAudiences, getOneAudience };

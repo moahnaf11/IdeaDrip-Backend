@@ -1,6 +1,7 @@
 const {
   createAud,
   getAllAudiences,
+  getOneAudience,
 } = require("../prisma/queries/audienceQueries");
 
 const createAudience = async (req, res) => {
@@ -24,4 +25,12 @@ const getAudiences = async (req, res) => {
   return res.status(404).json({ msg: "no audiences found" });
 };
 
-module.exports = { createAudience, getAudiences };
+const getSingleAudience = async (req, res) => {
+  const audience = await getOneAudience(req.params.id);
+  if (audience) {
+    return res.status(200).json(audience);
+  }
+  return res.status(404).json({ msg: "audience not found" });
+};
+
+module.exports = { createAudience, getAudiences, getSingleAudience };

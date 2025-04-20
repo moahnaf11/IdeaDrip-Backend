@@ -6,7 +6,7 @@ const {
 } = require("../controllers/redditController");
 const redditRouter = express.Router();
 
-redditRouter.get("/reddit-posts", fetchPost);
+redditRouter.post("/reddit-posts", fetchPost);
 redditRouter.get("/reddit-subreddits", fetchSubreddits);
 redditRouter.get("/reddit-specific-subreddit", fetchSpecificSubs);
 

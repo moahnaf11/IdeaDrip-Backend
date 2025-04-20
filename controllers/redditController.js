@@ -21,7 +21,8 @@ const getAccessToken = async () => {
 };
 
 const fetchPost = async (req, res) => {
-  const sort = req.query.sort || "hot";
+  const sort = req.body.sort || "hot";
+  const subs = req.body.subreddits;
   const painKeywords = [
     "i hate",
     "so frustrating",
@@ -46,17 +47,6 @@ const fetchPost = async (req, res) => {
   ];
 
   const token = await getAccessToken();
-  const subs = [
-    "AskReddit",
-    "TrueOffMyChest",
-    "Entrepreneur",
-    "startups",
-    "smallbusiness",
-    "sidehustle",
-    "IndieHackers",
-    "Futureology",
-    "SaaS",
-  ];
 
   let allPosts = [];
 
