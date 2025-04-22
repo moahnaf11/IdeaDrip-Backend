@@ -47,12 +47,9 @@ const fetchPost = async (req, res) => {
   ];
 
   const token = await getAccessToken();
-
-  let allPosts = [];
-
-  for (const sub of subs) {
+  const subredditPromises = subs.map(async (sub) => {
     const redditRes = await fetch(
-      `https://oauth.reddit.com/r/${sub}/${sort}?limit=50`,
+      `https://oauth.reddit.com/r/${sub.name}/${sort}?limit=50`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,75 +59,38 @@ const fetchPost = async (req, res) => {
     );
 
     const data = await redditRes.json();
+    if (!redditRes.ok) {
+      return [];
+    }
 
-    console.log("reddit res", data.data.children.length);
-    const filteredPosts = data.data.children
-      .filter((post) => {
-        const { title, selftext, author, distinguished } = post.data;
-        if (author === "AutoModerator" || distinguished === "moderator")
-          return false;
+    const filteredPosts =
+      data?.data?.children
+        ?.filter((post) => {
+          const { title, selftext, author, distinguished } = post.data;
+          if (author === "AutoModerator" || distinguished === "moderator")
+            return false;
 
-        const content = `${title} ${selftext}`.toLowerCase();
-        return painKeywords.some((kw) => content.includes(kw));
-      })
-      .map((post) => ({
-        title: post.data.title,
-        url: `https://reddit.com${post.data.permalink}`,
-        subreddit: sub,
-        upvotes: post.data.ups,
-        comments: post.data.num_comments,
-        author: post.data.author,
-        flair: post.data.link_flair_text,
-        selftext: post.data.selftext,
-      }));
-    console.log("filtered posts", filteredPosts);
+          const content = `${title} ${selftext}`.toLowerCase();
+          return painKeywords.some((kw) => content.includes(kw));
+        })
+        .map((post) => ({
+          title: post.data.title,
+          url: `https://reddit.com${post.data.permalink}`,
+          subreddit: sub,
+          upvotes: post.data.ups,
+          comments: post.data.num_comments,
+          author: post.data.author,
+          flair: post.data.link_flair_text,
+          selftext: post.data.selftext,
+        })) || [];
 
-    allPosts.push(...filteredPosts);
-  }
-  // Console.log(allPosts);
+    return filteredPosts;
+  });
+
+  const allPostsArrays = await Promise.all(subredditPromises);
+  const allPosts = allPostsArrays.flat();
 
   return res.json(allPosts);
-};
-
-// Fetch subreddits
-const fetchSubreddits = async (req, res) => {
-  const token = await getAccessToken();
-
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    "User-Agent": userAgent,
-  };
-
-  const endpoints = [
-    "https://oauth.reddit.com/subreddits/popular?limit=100",
-    "https://oauth.reddit.com/subreddits/new?limit=100",
-  ];
-
-  const [popularRes, newRes] = await Promise.all(
-    endpoints.map((url) => fetch(url, { headers })),
-  );
-
-  const [popularData, newData] = await Promise.all([
-    popularRes.json(),
-    newRes.json(),
-  ]);
-
-  const extractSubreddits = (data) =>
-    data?.data?.children?.map((child) => ({
-      name: child.data.display_name,
-      title: child.data.title,
-      subscribers: child.data.subscribers,
-      icon:
-        child.data.icon_img || child.data.community_icon || "".split("?")[0],
-      url: `https://reddit.com${child.data.url}`,
-    })) || [];
-
-  const result = {
-    popular: extractSubreddits(popularData),
-    new: extractSubreddits(newData),
-  };
-  console.log(result);
-  return res.json(result);
 };
 
 // Fetch specific subreddits
@@ -178,6 +138,5 @@ const fetchSpecificSubs = async (req, res) => {
 module.exports = {
   getAccessToken,
   fetchPost,
-  fetchSubreddits,
   fetchSpecificSubs,
 };

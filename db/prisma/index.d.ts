@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Audience = $Result.DefaultSelection<Prisma.$AudiencePayload>
+/**
+ * Model Subreddit
+ * 
+ */
+export type Subreddit = $Result.DefaultSelection<Prisma.$SubredditPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -168,6 +173,16 @@ export class PrismaClient<
     * ```
     */
   get audience(): Prisma.AudienceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.subreddit`: Exposes CRUD operations for the **Subreddit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Subreddits
+    * const subreddits = await prisma.subreddit.findMany()
+    * ```
+    */
+  get subreddit(): Prisma.SubredditDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -609,7 +624,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Audience: 'Audience'
+    Audience: 'Audience',
+    Subreddit: 'Subreddit'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -628,7 +644,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "audience"
+      modelProps: "user" | "audience" | "subreddit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -780,6 +796,80 @@ export namespace Prisma {
           }
         }
       }
+      Subreddit: {
+        payload: Prisma.$SubredditPayload<ExtArgs>
+        fields: Prisma.SubredditFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubredditFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubredditFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>
+          }
+          findFirst: {
+            args: Prisma.SubredditFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubredditFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>
+          }
+          findMany: {
+            args: Prisma.SubredditFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>[]
+          }
+          create: {
+            args: Prisma.SubredditCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>
+          }
+          createMany: {
+            args: Prisma.SubredditCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubredditCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>[]
+          }
+          delete: {
+            args: Prisma.SubredditDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>
+          }
+          update: {
+            args: Prisma.SubredditUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubredditDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubredditUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubredditUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubredditUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubredditPayload>
+          }
+          aggregate: {
+            args: Prisma.SubredditAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubreddit>
+          }
+          groupBy: {
+            args: Prisma.SubredditGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubredditGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubredditCountArgs<ExtArgs>
+            result: $Utils.Optional<SubredditCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -866,6 +956,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     audience?: AudienceOmit
+    subreddit?: SubredditOmit
   }
 
   /* Types for Logging */
@@ -982,6 +1073,68 @@ export namespace Prisma {
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountAudiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AudienceWhereInput
+  }
+
+
+  /**
+   * Count Type AudienceCountOutputType
+   */
+
+  export type AudienceCountOutputType = {
+    subreddits: number
+  }
+
+  export type AudienceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subreddits?: boolean | AudienceCountOutputTypeCountSubredditsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AudienceCountOutputType without action
+   */
+  export type AudienceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AudienceCountOutputType
+     */
+    select?: AudienceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AudienceCountOutputType without action
+   */
+  export type AudienceCountOutputTypeCountSubredditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubredditWhereInput
+  }
+
+
+  /**
+   * Count Type SubredditCountOutputType
+   */
+
+  export type SubredditCountOutputType = {
+    audiences: number
+  }
+
+  export type SubredditCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    audiences?: boolean | SubredditCountOutputTypeCountAudiencesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SubredditCountOutputType without action
+   */
+  export type SubredditCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubredditCountOutputType
+     */
+    select?: SubredditCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SubredditCountOutputType without action
+   */
+  export type SubredditCountOutputTypeCountAudiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AudienceWhereInput
   }
 
@@ -2129,7 +2282,6 @@ export namespace Prisma {
     id: number
     title: number
     searchTerm: number
-    subreddits: number
     createdAt: number
     userId: number
     _all: number
@@ -2156,7 +2308,6 @@ export namespace Prisma {
     id?: true
     title?: true
     searchTerm?: true
-    subreddits?: true
     createdAt?: true
     userId?: true
     _all?: true
@@ -2238,7 +2389,6 @@ export namespace Prisma {
     id: string
     title: string
     searchTerm: string
-    subreddits: string[]
     createdAt: Date
     userId: string
     _count: AudienceCountAggregateOutputType | null
@@ -2264,17 +2414,17 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     searchTerm?: boolean
-    subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    subreddits?: boolean | Audience$subredditsArgs<ExtArgs>
+    _count?: boolean | AudienceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["audience"]>
 
   export type AudienceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     searchTerm?: boolean
-    subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2284,7 +2434,6 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     searchTerm?: boolean
-    subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2294,14 +2443,15 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     searchTerm?: boolean
-    subreddits?: boolean
     createdAt?: boolean
     userId?: boolean
   }
 
-  export type AudienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "searchTerm" | "subreddits" | "createdAt" | "userId", ExtArgs["result"]["audience"]>
+  export type AudienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "searchTerm" | "createdAt" | "userId", ExtArgs["result"]["audience"]>
   export type AudienceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    subreddits?: boolean | Audience$subredditsArgs<ExtArgs>
+    _count?: boolean | AudienceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AudienceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2314,12 +2464,12 @@ export namespace Prisma {
     name: "Audience"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      subreddits: Prisma.$SubredditPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       searchTerm: string
-      subreddits: string[]
       createdAt: Date
       userId: string
     }, ExtArgs["result"]["audience"]>
@@ -2717,6 +2867,7 @@ export namespace Prisma {
   export interface Prisma__AudienceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    subreddits<T extends Audience$subredditsArgs<ExtArgs> = {}>(args?: Subset<T, Audience$subredditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2749,7 +2900,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Audience", 'String'>
     readonly title: FieldRef<"Audience", 'String'>
     readonly searchTerm: FieldRef<"Audience", 'String'>
-    readonly subreddits: FieldRef<"Audience", 'String[]'>
     readonly createdAt: FieldRef<"Audience", 'DateTime'>
     readonly userId: FieldRef<"Audience", 'String'>
   }
@@ -3148,6 +3298,30 @@ export namespace Prisma {
   }
 
   /**
+   * Audience.subreddits
+   */
+  export type Audience$subredditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    where?: SubredditWhereInput
+    orderBy?: SubredditOrderByWithRelationInput | SubredditOrderByWithRelationInput[]
+    cursor?: SubredditWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubredditScalarFieldEnum | SubredditScalarFieldEnum[]
+  }
+
+  /**
    * Audience without action
    */
   export type AudienceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3163,6 +3337,1123 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AudienceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Subreddit
+   */
+
+  export type AggregateSubreddit = {
+    _count: SubredditCountAggregateOutputType | null
+    _avg: SubredditAvgAggregateOutputType | null
+    _sum: SubredditSumAggregateOutputType | null
+    _min: SubredditMinAggregateOutputType | null
+    _max: SubredditMaxAggregateOutputType | null
+  }
+
+  export type SubredditAvgAggregateOutputType = {
+    subscribers: number | null
+  }
+
+  export type SubredditSumAggregateOutputType = {
+    subscribers: number | null
+  }
+
+  export type SubredditMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    title: string | null
+    subscribers: number | null
+    icon: string | null
+    url: string | null
+  }
+
+  export type SubredditMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    title: string | null
+    subscribers: number | null
+    icon: string | null
+    url: string | null
+  }
+
+  export type SubredditCountAggregateOutputType = {
+    id: number
+    name: number
+    title: number
+    subscribers: number
+    icon: number
+    url: number
+    _all: number
+  }
+
+
+  export type SubredditAvgAggregateInputType = {
+    subscribers?: true
+  }
+
+  export type SubredditSumAggregateInputType = {
+    subscribers?: true
+  }
+
+  export type SubredditMinAggregateInputType = {
+    id?: true
+    name?: true
+    title?: true
+    subscribers?: true
+    icon?: true
+    url?: true
+  }
+
+  export type SubredditMaxAggregateInputType = {
+    id?: true
+    name?: true
+    title?: true
+    subscribers?: true
+    icon?: true
+    url?: true
+  }
+
+  export type SubredditCountAggregateInputType = {
+    id?: true
+    name?: true
+    title?: true
+    subscribers?: true
+    icon?: true
+    url?: true
+    _all?: true
+  }
+
+  export type SubredditAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Subreddit to aggregate.
+     */
+    where?: SubredditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subreddits to fetch.
+     */
+    orderBy?: SubredditOrderByWithRelationInput | SubredditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubredditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subreddits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subreddits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Subreddits
+    **/
+    _count?: true | SubredditCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubredditAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubredditSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubredditMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubredditMaxAggregateInputType
+  }
+
+  export type GetSubredditAggregateType<T extends SubredditAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubreddit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubreddit[P]>
+      : GetScalarType<T[P], AggregateSubreddit[P]>
+  }
+
+
+
+
+  export type SubredditGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubredditWhereInput
+    orderBy?: SubredditOrderByWithAggregationInput | SubredditOrderByWithAggregationInput[]
+    by: SubredditScalarFieldEnum[] | SubredditScalarFieldEnum
+    having?: SubredditScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubredditCountAggregateInputType | true
+    _avg?: SubredditAvgAggregateInputType
+    _sum?: SubredditSumAggregateInputType
+    _min?: SubredditMinAggregateInputType
+    _max?: SubredditMaxAggregateInputType
+  }
+
+  export type SubredditGroupByOutputType = {
+    id: string
+    name: string
+    title: string
+    subscribers: number
+    icon: string
+    url: string
+    _count: SubredditCountAggregateOutputType | null
+    _avg: SubredditAvgAggregateOutputType | null
+    _sum: SubredditSumAggregateOutputType | null
+    _min: SubredditMinAggregateOutputType | null
+    _max: SubredditMaxAggregateOutputType | null
+  }
+
+  type GetSubredditGroupByPayload<T extends SubredditGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubredditGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubredditGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubredditGroupByOutputType[P]>
+            : GetScalarType<T[P], SubredditGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubredditSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    title?: boolean
+    subscribers?: boolean
+    icon?: boolean
+    url?: boolean
+    audiences?: boolean | Subreddit$audiencesArgs<ExtArgs>
+    _count?: boolean | SubredditCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subreddit"]>
+
+  export type SubredditSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    title?: boolean
+    subscribers?: boolean
+    icon?: boolean
+    url?: boolean
+  }, ExtArgs["result"]["subreddit"]>
+
+  export type SubredditSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    title?: boolean
+    subscribers?: boolean
+    icon?: boolean
+    url?: boolean
+  }, ExtArgs["result"]["subreddit"]>
+
+  export type SubredditSelectScalar = {
+    id?: boolean
+    name?: boolean
+    title?: boolean
+    subscribers?: boolean
+    icon?: boolean
+    url?: boolean
+  }
+
+  export type SubredditOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "title" | "subscribers" | "icon" | "url", ExtArgs["result"]["subreddit"]>
+  export type SubredditInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    audiences?: boolean | Subreddit$audiencesArgs<ExtArgs>
+    _count?: boolean | SubredditCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SubredditIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SubredditIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SubredditPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Subreddit"
+    objects: {
+      audiences: Prisma.$AudiencePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      title: string
+      subscribers: number
+      icon: string
+      url: string
+    }, ExtArgs["result"]["subreddit"]>
+    composites: {}
+  }
+
+  type SubredditGetPayload<S extends boolean | null | undefined | SubredditDefaultArgs> = $Result.GetResult<Prisma.$SubredditPayload, S>
+
+  type SubredditCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubredditFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubredditCountAggregateInputType | true
+    }
+
+  export interface SubredditDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Subreddit'], meta: { name: 'Subreddit' } }
+    /**
+     * Find zero or one Subreddit that matches the filter.
+     * @param {SubredditFindUniqueArgs} args - Arguments to find a Subreddit
+     * @example
+     * // Get one Subreddit
+     * const subreddit = await prisma.subreddit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubredditFindUniqueArgs>(args: SelectSubset<T, SubredditFindUniqueArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Subreddit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubredditFindUniqueOrThrowArgs} args - Arguments to find a Subreddit
+     * @example
+     * // Get one Subreddit
+     * const subreddit = await prisma.subreddit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubredditFindUniqueOrThrowArgs>(args: SelectSubset<T, SubredditFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Subreddit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditFindFirstArgs} args - Arguments to find a Subreddit
+     * @example
+     * // Get one Subreddit
+     * const subreddit = await prisma.subreddit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubredditFindFirstArgs>(args?: SelectSubset<T, SubredditFindFirstArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Subreddit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditFindFirstOrThrowArgs} args - Arguments to find a Subreddit
+     * @example
+     * // Get one Subreddit
+     * const subreddit = await prisma.subreddit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubredditFindFirstOrThrowArgs>(args?: SelectSubset<T, SubredditFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Subreddits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Subreddits
+     * const subreddits = await prisma.subreddit.findMany()
+     * 
+     * // Get first 10 Subreddits
+     * const subreddits = await prisma.subreddit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const subredditWithIdOnly = await prisma.subreddit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubredditFindManyArgs>(args?: SelectSubset<T, SubredditFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Subreddit.
+     * @param {SubredditCreateArgs} args - Arguments to create a Subreddit.
+     * @example
+     * // Create one Subreddit
+     * const Subreddit = await prisma.subreddit.create({
+     *   data: {
+     *     // ... data to create a Subreddit
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubredditCreateArgs>(args: SelectSubset<T, SubredditCreateArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Subreddits.
+     * @param {SubredditCreateManyArgs} args - Arguments to create many Subreddits.
+     * @example
+     * // Create many Subreddits
+     * const subreddit = await prisma.subreddit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubredditCreateManyArgs>(args?: SelectSubset<T, SubredditCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Subreddits and returns the data saved in the database.
+     * @param {SubredditCreateManyAndReturnArgs} args - Arguments to create many Subreddits.
+     * @example
+     * // Create many Subreddits
+     * const subreddit = await prisma.subreddit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Subreddits and only return the `id`
+     * const subredditWithIdOnly = await prisma.subreddit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubredditCreateManyAndReturnArgs>(args?: SelectSubset<T, SubredditCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Subreddit.
+     * @param {SubredditDeleteArgs} args - Arguments to delete one Subreddit.
+     * @example
+     * // Delete one Subreddit
+     * const Subreddit = await prisma.subreddit.delete({
+     *   where: {
+     *     // ... filter to delete one Subreddit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubredditDeleteArgs>(args: SelectSubset<T, SubredditDeleteArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Subreddit.
+     * @param {SubredditUpdateArgs} args - Arguments to update one Subreddit.
+     * @example
+     * // Update one Subreddit
+     * const subreddit = await prisma.subreddit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubredditUpdateArgs>(args: SelectSubset<T, SubredditUpdateArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Subreddits.
+     * @param {SubredditDeleteManyArgs} args - Arguments to filter Subreddits to delete.
+     * @example
+     * // Delete a few Subreddits
+     * const { count } = await prisma.subreddit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubredditDeleteManyArgs>(args?: SelectSubset<T, SubredditDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Subreddits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Subreddits
+     * const subreddit = await prisma.subreddit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubredditUpdateManyArgs>(args: SelectSubset<T, SubredditUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Subreddits and returns the data updated in the database.
+     * @param {SubredditUpdateManyAndReturnArgs} args - Arguments to update many Subreddits.
+     * @example
+     * // Update many Subreddits
+     * const subreddit = await prisma.subreddit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Subreddits and only return the `id`
+     * const subredditWithIdOnly = await prisma.subreddit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubredditUpdateManyAndReturnArgs>(args: SelectSubset<T, SubredditUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Subreddit.
+     * @param {SubredditUpsertArgs} args - Arguments to update or create a Subreddit.
+     * @example
+     * // Update or create a Subreddit
+     * const subreddit = await prisma.subreddit.upsert({
+     *   create: {
+     *     // ... data to create a Subreddit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Subreddit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubredditUpsertArgs>(args: SelectSubset<T, SubredditUpsertArgs<ExtArgs>>): Prisma__SubredditClient<$Result.GetResult<Prisma.$SubredditPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Subreddits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditCountArgs} args - Arguments to filter Subreddits to count.
+     * @example
+     * // Count the number of Subreddits
+     * const count = await prisma.subreddit.count({
+     *   where: {
+     *     // ... the filter for the Subreddits we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubredditCountArgs>(
+      args?: Subset<T, SubredditCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubredditCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Subreddit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubredditAggregateArgs>(args: Subset<T, SubredditAggregateArgs>): Prisma.PrismaPromise<GetSubredditAggregateType<T>>
+
+    /**
+     * Group by Subreddit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubredditGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubredditGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubredditGroupByArgs['orderBy'] }
+        : { orderBy?: SubredditGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubredditGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubredditGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Subreddit model
+   */
+  readonly fields: SubredditFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Subreddit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubredditClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    audiences<T extends Subreddit$audiencesArgs<ExtArgs> = {}>(args?: Subset<T, Subreddit$audiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AudiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Subreddit model
+   */ 
+  interface SubredditFieldRefs {
+    readonly id: FieldRef<"Subreddit", 'String'>
+    readonly name: FieldRef<"Subreddit", 'String'>
+    readonly title: FieldRef<"Subreddit", 'String'>
+    readonly subscribers: FieldRef<"Subreddit", 'Int'>
+    readonly icon: FieldRef<"Subreddit", 'String'>
+    readonly url: FieldRef<"Subreddit", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Subreddit findUnique
+   */
+  export type SubredditFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * Filter, which Subreddit to fetch.
+     */
+    where: SubredditWhereUniqueInput
+  }
+
+  /**
+   * Subreddit findUniqueOrThrow
+   */
+  export type SubredditFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * Filter, which Subreddit to fetch.
+     */
+    where: SubredditWhereUniqueInput
+  }
+
+  /**
+   * Subreddit findFirst
+   */
+  export type SubredditFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * Filter, which Subreddit to fetch.
+     */
+    where?: SubredditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subreddits to fetch.
+     */
+    orderBy?: SubredditOrderByWithRelationInput | SubredditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Subreddits.
+     */
+    cursor?: SubredditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subreddits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subreddits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Subreddits.
+     */
+    distinct?: SubredditScalarFieldEnum | SubredditScalarFieldEnum[]
+  }
+
+  /**
+   * Subreddit findFirstOrThrow
+   */
+  export type SubredditFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * Filter, which Subreddit to fetch.
+     */
+    where?: SubredditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subreddits to fetch.
+     */
+    orderBy?: SubredditOrderByWithRelationInput | SubredditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Subreddits.
+     */
+    cursor?: SubredditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subreddits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subreddits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Subreddits.
+     */
+    distinct?: SubredditScalarFieldEnum | SubredditScalarFieldEnum[]
+  }
+
+  /**
+   * Subreddit findMany
+   */
+  export type SubredditFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * Filter, which Subreddits to fetch.
+     */
+    where?: SubredditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subreddits to fetch.
+     */
+    orderBy?: SubredditOrderByWithRelationInput | SubredditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Subreddits.
+     */
+    cursor?: SubredditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subreddits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subreddits.
+     */
+    skip?: number
+    distinct?: SubredditScalarFieldEnum | SubredditScalarFieldEnum[]
+  }
+
+  /**
+   * Subreddit create
+   */
+  export type SubredditCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Subreddit.
+     */
+    data: XOR<SubredditCreateInput, SubredditUncheckedCreateInput>
+  }
+
+  /**
+   * Subreddit createMany
+   */
+  export type SubredditCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Subreddits.
+     */
+    data: SubredditCreateManyInput | SubredditCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Subreddit createManyAndReturn
+   */
+  export type SubredditCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * The data used to create many Subreddits.
+     */
+    data: SubredditCreateManyInput | SubredditCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Subreddit update
+   */
+  export type SubredditUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Subreddit.
+     */
+    data: XOR<SubredditUpdateInput, SubredditUncheckedUpdateInput>
+    /**
+     * Choose, which Subreddit to update.
+     */
+    where: SubredditWhereUniqueInput
+  }
+
+  /**
+   * Subreddit updateMany
+   */
+  export type SubredditUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Subreddits.
+     */
+    data: XOR<SubredditUpdateManyMutationInput, SubredditUncheckedUpdateManyInput>
+    /**
+     * Filter which Subreddits to update
+     */
+    where?: SubredditWhereInput
+    /**
+     * Limit how many Subreddits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subreddit updateManyAndReturn
+   */
+  export type SubredditUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * The data used to update Subreddits.
+     */
+    data: XOR<SubredditUpdateManyMutationInput, SubredditUncheckedUpdateManyInput>
+    /**
+     * Filter which Subreddits to update
+     */
+    where?: SubredditWhereInput
+    /**
+     * Limit how many Subreddits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subreddit upsert
+   */
+  export type SubredditUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Subreddit to update in case it exists.
+     */
+    where: SubredditWhereUniqueInput
+    /**
+     * In case the Subreddit found by the `where` argument doesn't exist, create a new Subreddit with this data.
+     */
+    create: XOR<SubredditCreateInput, SubredditUncheckedCreateInput>
+    /**
+     * In case the Subreddit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubredditUpdateInput, SubredditUncheckedUpdateInput>
+  }
+
+  /**
+   * Subreddit delete
+   */
+  export type SubredditDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
+    /**
+     * Filter which Subreddit to delete.
+     */
+    where: SubredditWhereUniqueInput
+  }
+
+  /**
+   * Subreddit deleteMany
+   */
+  export type SubredditDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Subreddits to delete
+     */
+    where?: SubredditWhereInput
+    /**
+     * Limit how many Subreddits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subreddit.audiences
+   */
+  export type Subreddit$audiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Audience
+     */
+    select?: AudienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Audience
+     */
+    omit?: AudienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AudienceInclude<ExtArgs> | null
+    where?: AudienceWhereInput
+    orderBy?: AudienceOrderByWithRelationInput | AudienceOrderByWithRelationInput[]
+    cursor?: AudienceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AudienceScalarFieldEnum | AudienceScalarFieldEnum[]
+  }
+
+  /**
+   * Subreddit without action
+   */
+  export type SubredditDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subreddit
+     */
+    select?: SubredditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subreddit
+     */
+    omit?: SubredditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubredditInclude<ExtArgs> | null
   }
 
 
@@ -3198,12 +4489,23 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     searchTerm: 'searchTerm',
-    subreddits: 'subreddits',
     createdAt: 'createdAt',
     userId: 'userId'
   };
 
   export type AudienceScalarFieldEnum = (typeof AudienceScalarFieldEnum)[keyof typeof AudienceScalarFieldEnum]
+
+
+  export const SubredditScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    title: 'title',
+    subscribers: 'subscribers',
+    icon: 'icon',
+    url: 'url'
+  };
+
+  export type SubredditScalarFieldEnum = (typeof SubredditScalarFieldEnum)[keyof typeof SubredditScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3274,6 +4576,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -3357,20 +4673,20 @@ export namespace Prisma {
     id?: StringFilter<"Audience"> | string
     title?: StringFilter<"Audience"> | string
     searchTerm?: StringFilter<"Audience"> | string
-    subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeFilter<"Audience"> | Date | string
     userId?: StringFilter<"Audience"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    subreddits?: SubredditListRelationFilter
   }
 
   export type AudienceOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     searchTerm?: SortOrder
-    subreddits?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
+    subreddits?: SubredditOrderByRelationAggregateInput
   }
 
   export type AudienceWhereUniqueInput = Prisma.AtLeast<{
@@ -3380,17 +4696,16 @@ export namespace Prisma {
     NOT?: AudienceWhereInput | AudienceWhereInput[]
     title?: StringFilter<"Audience"> | string
     searchTerm?: StringFilter<"Audience"> | string
-    subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeFilter<"Audience"> | Date | string
     userId?: StringFilter<"Audience"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    subreddits?: SubredditListRelationFilter
   }, "id">
 
   export type AudienceOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     searchTerm?: SortOrder
-    subreddits?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
     _count?: AudienceCountOrderByAggregateInput
@@ -3405,9 +4720,70 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Audience"> | string
     title?: StringWithAggregatesFilter<"Audience"> | string
     searchTerm?: StringWithAggregatesFilter<"Audience"> | string
-    subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeWithAggregatesFilter<"Audience"> | Date | string
     userId?: StringWithAggregatesFilter<"Audience"> | string
+  }
+
+  export type SubredditWhereInput = {
+    AND?: SubredditWhereInput | SubredditWhereInput[]
+    OR?: SubredditWhereInput[]
+    NOT?: SubredditWhereInput | SubredditWhereInput[]
+    id?: StringFilter<"Subreddit"> | string
+    name?: StringFilter<"Subreddit"> | string
+    title?: StringFilter<"Subreddit"> | string
+    subscribers?: IntFilter<"Subreddit"> | number
+    icon?: StringFilter<"Subreddit"> | string
+    url?: StringFilter<"Subreddit"> | string
+    audiences?: AudienceListRelationFilter
+  }
+
+  export type SubredditOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    subscribers?: SortOrder
+    icon?: SortOrder
+    url?: SortOrder
+    audiences?: AudienceOrderByRelationAggregateInput
+  }
+
+  export type SubredditWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: SubredditWhereInput | SubredditWhereInput[]
+    OR?: SubredditWhereInput[]
+    NOT?: SubredditWhereInput | SubredditWhereInput[]
+    title?: StringFilter<"Subreddit"> | string
+    subscribers?: IntFilter<"Subreddit"> | number
+    icon?: StringFilter<"Subreddit"> | string
+    url?: StringFilter<"Subreddit"> | string
+    audiences?: AudienceListRelationFilter
+  }, "id" | "name">
+
+  export type SubredditOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    subscribers?: SortOrder
+    icon?: SortOrder
+    url?: SortOrder
+    _count?: SubredditCountOrderByAggregateInput
+    _avg?: SubredditAvgOrderByAggregateInput
+    _max?: SubredditMaxOrderByAggregateInput
+    _min?: SubredditMinOrderByAggregateInput
+    _sum?: SubredditSumOrderByAggregateInput
+  }
+
+  export type SubredditScalarWhereWithAggregatesInput = {
+    AND?: SubredditScalarWhereWithAggregatesInput | SubredditScalarWhereWithAggregatesInput[]
+    OR?: SubredditScalarWhereWithAggregatesInput[]
+    NOT?: SubredditScalarWhereWithAggregatesInput | SubredditScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Subreddit"> | string
+    name?: StringWithAggregatesFilter<"Subreddit"> | string
+    title?: StringWithAggregatesFilter<"Subreddit"> | string
+    subscribers?: IntWithAggregatesFilter<"Subreddit"> | number
+    icon?: StringWithAggregatesFilter<"Subreddit"> | string
+    url?: StringWithAggregatesFilter<"Subreddit"> | string
   }
 
   export type UserCreateInput = {
@@ -3495,43 +4871,42 @@ export namespace Prisma {
     id?: string
     title: string
     searchTerm?: string
-    subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutAudiencesInput
+    subreddits?: SubredditCreateNestedManyWithoutAudiencesInput
   }
 
   export type AudienceUncheckedCreateInput = {
     id?: string
     title: string
     searchTerm?: string
-    subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
     userId: string
+    subreddits?: SubredditUncheckedCreateNestedManyWithoutAudiencesInput
   }
 
   export type AudienceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAudiencesNestedInput
+    subreddits?: SubredditUpdateManyWithoutAudiencesNestedInput
   }
 
   export type AudienceUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    subreddits?: SubredditUncheckedUpdateManyWithoutAudiencesNestedInput
   }
 
   export type AudienceCreateManyInput = {
     id?: string
     title: string
     searchTerm?: string
-    subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
     userId: string
   }
@@ -3540,7 +4915,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3548,9 +4922,75 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubredditCreateInput = {
+    id?: string
+    name: string
+    title: string
+    subscribers: number
+    icon: string
+    url: string
+    audiences?: AudienceCreateNestedManyWithoutSubredditsInput
+  }
+
+  export type SubredditUncheckedCreateInput = {
+    id?: string
+    name: string
+    title: string
+    subscribers: number
+    icon: string
+    url: string
+    audiences?: AudienceUncheckedCreateNestedManyWithoutSubredditsInput
+  }
+
+  export type SubredditUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    audiences?: AudienceUpdateManyWithoutSubredditsNestedInput
+  }
+
+  export type SubredditUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    audiences?: AudienceUncheckedUpdateManyWithoutSubredditsNestedInput
+  }
+
+  export type SubredditCreateManyInput = {
+    id?: string
+    name: string
+    title: string
+    subscribers: number
+    icon: string
+    url: string
+  }
+
+  export type SubredditUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubredditUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3692,24 +5132,25 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type SubredditListRelationFilter = {
+    every?: SubredditWhereInput
+    some?: SubredditWhereInput
+    none?: SubredditWhereInput
+  }
+
+  export type SubredditOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type AudienceCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     searchTerm?: SortOrder
-    subreddits?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
   }
@@ -3728,6 +5169,68 @@ export namespace Prisma {
     searchTerm?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type SubredditCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    subscribers?: SortOrder
+    icon?: SortOrder
+    url?: SortOrder
+  }
+
+  export type SubredditAvgOrderByAggregateInput = {
+    subscribers?: SortOrder
+  }
+
+  export type SubredditMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    subscribers?: SortOrder
+    icon?: SortOrder
+    url?: SortOrder
+  }
+
+  export type SubredditMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    subscribers?: SortOrder
+    icon?: SortOrder
+    url?: SortOrder
+  }
+
+  export type SubredditSumOrderByAggregateInput = {
+    subscribers?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type AudienceCreateNestedManyWithoutUserInput = {
@@ -3784,19 +5287,22 @@ export namespace Prisma {
     deleteMany?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
   }
 
-  export type AudienceCreatesubredditsInput = {
-    set: string[]
-  }
-
   export type UserCreateNestedOneWithoutAudiencesInput = {
     create?: XOR<UserCreateWithoutAudiencesInput, UserUncheckedCreateWithoutAudiencesInput>
     connectOrCreate?: UserCreateOrConnectWithoutAudiencesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type AudienceUpdatesubredditsInput = {
-    set?: string[]
-    push?: string | string[]
+  export type SubredditCreateNestedManyWithoutAudiencesInput = {
+    create?: XOR<SubredditCreateWithoutAudiencesInput, SubredditUncheckedCreateWithoutAudiencesInput> | SubredditCreateWithoutAudiencesInput[] | SubredditUncheckedCreateWithoutAudiencesInput[]
+    connectOrCreate?: SubredditCreateOrConnectWithoutAudiencesInput | SubredditCreateOrConnectWithoutAudiencesInput[]
+    connect?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+  }
+
+  export type SubredditUncheckedCreateNestedManyWithoutAudiencesInput = {
+    create?: XOR<SubredditCreateWithoutAudiencesInput, SubredditUncheckedCreateWithoutAudiencesInput> | SubredditCreateWithoutAudiencesInput[] | SubredditUncheckedCreateWithoutAudiencesInput[]
+    connectOrCreate?: SubredditCreateOrConnectWithoutAudiencesInput | SubredditCreateOrConnectWithoutAudiencesInput[]
+    connect?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutAudiencesNestedInput = {
@@ -3805,6 +5311,78 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAudiencesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAudiencesInput, UserUpdateWithoutAudiencesInput>, UserUncheckedUpdateWithoutAudiencesInput>
+  }
+
+  export type SubredditUpdateManyWithoutAudiencesNestedInput = {
+    create?: XOR<SubredditCreateWithoutAudiencesInput, SubredditUncheckedCreateWithoutAudiencesInput> | SubredditCreateWithoutAudiencesInput[] | SubredditUncheckedCreateWithoutAudiencesInput[]
+    connectOrCreate?: SubredditCreateOrConnectWithoutAudiencesInput | SubredditCreateOrConnectWithoutAudiencesInput[]
+    upsert?: SubredditUpsertWithWhereUniqueWithoutAudiencesInput | SubredditUpsertWithWhereUniqueWithoutAudiencesInput[]
+    set?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    disconnect?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    delete?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    connect?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    update?: SubredditUpdateWithWhereUniqueWithoutAudiencesInput | SubredditUpdateWithWhereUniqueWithoutAudiencesInput[]
+    updateMany?: SubredditUpdateManyWithWhereWithoutAudiencesInput | SubredditUpdateManyWithWhereWithoutAudiencesInput[]
+    deleteMany?: SubredditScalarWhereInput | SubredditScalarWhereInput[]
+  }
+
+  export type SubredditUncheckedUpdateManyWithoutAudiencesNestedInput = {
+    create?: XOR<SubredditCreateWithoutAudiencesInput, SubredditUncheckedCreateWithoutAudiencesInput> | SubredditCreateWithoutAudiencesInput[] | SubredditUncheckedCreateWithoutAudiencesInput[]
+    connectOrCreate?: SubredditCreateOrConnectWithoutAudiencesInput | SubredditCreateOrConnectWithoutAudiencesInput[]
+    upsert?: SubredditUpsertWithWhereUniqueWithoutAudiencesInput | SubredditUpsertWithWhereUniqueWithoutAudiencesInput[]
+    set?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    disconnect?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    delete?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    connect?: SubredditWhereUniqueInput | SubredditWhereUniqueInput[]
+    update?: SubredditUpdateWithWhereUniqueWithoutAudiencesInput | SubredditUpdateWithWhereUniqueWithoutAudiencesInput[]
+    updateMany?: SubredditUpdateManyWithWhereWithoutAudiencesInput | SubredditUpdateManyWithWhereWithoutAudiencesInput[]
+    deleteMany?: SubredditScalarWhereInput | SubredditScalarWhereInput[]
+  }
+
+  export type AudienceCreateNestedManyWithoutSubredditsInput = {
+    create?: XOR<AudienceCreateWithoutSubredditsInput, AudienceUncheckedCreateWithoutSubredditsInput> | AudienceCreateWithoutSubredditsInput[] | AudienceUncheckedCreateWithoutSubredditsInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutSubredditsInput | AudienceCreateOrConnectWithoutSubredditsInput[]
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+  }
+
+  export type AudienceUncheckedCreateNestedManyWithoutSubredditsInput = {
+    create?: XOR<AudienceCreateWithoutSubredditsInput, AudienceUncheckedCreateWithoutSubredditsInput> | AudienceCreateWithoutSubredditsInput[] | AudienceUncheckedCreateWithoutSubredditsInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutSubredditsInput | AudienceCreateOrConnectWithoutSubredditsInput[]
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type AudienceUpdateManyWithoutSubredditsNestedInput = {
+    create?: XOR<AudienceCreateWithoutSubredditsInput, AudienceUncheckedCreateWithoutSubredditsInput> | AudienceCreateWithoutSubredditsInput[] | AudienceUncheckedCreateWithoutSubredditsInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutSubredditsInput | AudienceCreateOrConnectWithoutSubredditsInput[]
+    upsert?: AudienceUpsertWithWhereUniqueWithoutSubredditsInput | AudienceUpsertWithWhereUniqueWithoutSubredditsInput[]
+    set?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    disconnect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    delete?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    update?: AudienceUpdateWithWhereUniqueWithoutSubredditsInput | AudienceUpdateWithWhereUniqueWithoutSubredditsInput[]
+    updateMany?: AudienceUpdateManyWithWhereWithoutSubredditsInput | AudienceUpdateManyWithWhereWithoutSubredditsInput[]
+    deleteMany?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
+  }
+
+  export type AudienceUncheckedUpdateManyWithoutSubredditsNestedInput = {
+    create?: XOR<AudienceCreateWithoutSubredditsInput, AudienceUncheckedCreateWithoutSubredditsInput> | AudienceCreateWithoutSubredditsInput[] | AudienceUncheckedCreateWithoutSubredditsInput[]
+    connectOrCreate?: AudienceCreateOrConnectWithoutSubredditsInput | AudienceCreateOrConnectWithoutSubredditsInput[]
+    upsert?: AudienceUpsertWithWhereUniqueWithoutSubredditsInput | AudienceUpsertWithWhereUniqueWithoutSubredditsInput[]
+    set?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    disconnect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    delete?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    connect?: AudienceWhereUniqueInput | AudienceWhereUniqueInput[]
+    update?: AudienceUpdateWithWhereUniqueWithoutSubredditsInput | AudienceUpdateWithWhereUniqueWithoutSubredditsInput[]
+    updateMany?: AudienceUpdateManyWithWhereWithoutSubredditsInput | AudienceUpdateManyWithWhereWithoutSubredditsInput[]
+    deleteMany?: AudienceScalarWhereInput | AudienceScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3916,20 +5494,47 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type AudienceCreateWithoutUserInput = {
     id?: string
     title: string
     searchTerm?: string
-    subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
+    subreddits?: SubredditCreateNestedManyWithoutAudiencesInput
   }
 
   export type AudienceUncheckedCreateWithoutUserInput = {
     id?: string
     title: string
     searchTerm?: string
-    subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
+    subreddits?: SubredditUncheckedCreateNestedManyWithoutAudiencesInput
   }
 
   export type AudienceCreateOrConnectWithoutUserInput = {
@@ -3965,7 +5570,6 @@ export namespace Prisma {
     id?: StringFilter<"Audience"> | string
     title?: StringFilter<"Audience"> | string
     searchTerm?: StringFilter<"Audience"> | string
-    subreddits?: StringNullableListFilter<"Audience">
     createdAt?: DateTimeFilter<"Audience"> | Date | string
     userId?: StringFilter<"Audience"> | string
   }
@@ -3995,6 +5599,29 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutAudiencesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutAudiencesInput, UserUncheckedCreateWithoutAudiencesInput>
+  }
+
+  export type SubredditCreateWithoutAudiencesInput = {
+    id?: string
+    name: string
+    title: string
+    subscribers: number
+    icon: string
+    url: string
+  }
+
+  export type SubredditUncheckedCreateWithoutAudiencesInput = {
+    id?: string
+    name: string
+    title: string
+    subscribers: number
+    icon: string
+    url: string
+  }
+
+  export type SubredditCreateOrConnectWithoutAudiencesInput = {
+    where: SubredditWhereUniqueInput
+    create: XOR<SubredditCreateWithoutAudiencesInput, SubredditUncheckedCreateWithoutAudiencesInput>
   }
 
   export type UserUpsertWithoutAudiencesInput = {
@@ -4030,11 +5657,75 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type SubredditUpsertWithWhereUniqueWithoutAudiencesInput = {
+    where: SubredditWhereUniqueInput
+    update: XOR<SubredditUpdateWithoutAudiencesInput, SubredditUncheckedUpdateWithoutAudiencesInput>
+    create: XOR<SubredditCreateWithoutAudiencesInput, SubredditUncheckedCreateWithoutAudiencesInput>
+  }
+
+  export type SubredditUpdateWithWhereUniqueWithoutAudiencesInput = {
+    where: SubredditWhereUniqueInput
+    data: XOR<SubredditUpdateWithoutAudiencesInput, SubredditUncheckedUpdateWithoutAudiencesInput>
+  }
+
+  export type SubredditUpdateManyWithWhereWithoutAudiencesInput = {
+    where: SubredditScalarWhereInput
+    data: XOR<SubredditUpdateManyMutationInput, SubredditUncheckedUpdateManyWithoutAudiencesInput>
+  }
+
+  export type SubredditScalarWhereInput = {
+    AND?: SubredditScalarWhereInput | SubredditScalarWhereInput[]
+    OR?: SubredditScalarWhereInput[]
+    NOT?: SubredditScalarWhereInput | SubredditScalarWhereInput[]
+    id?: StringFilter<"Subreddit"> | string
+    name?: StringFilter<"Subreddit"> | string
+    title?: StringFilter<"Subreddit"> | string
+    subscribers?: IntFilter<"Subreddit"> | number
+    icon?: StringFilter<"Subreddit"> | string
+    url?: StringFilter<"Subreddit"> | string
+  }
+
+  export type AudienceCreateWithoutSubredditsInput = {
+    id?: string
+    title: string
+    searchTerm?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutAudiencesInput
+  }
+
+  export type AudienceUncheckedCreateWithoutSubredditsInput = {
+    id?: string
+    title: string
+    searchTerm?: string
+    createdAt?: Date | string
+    userId: string
+  }
+
+  export type AudienceCreateOrConnectWithoutSubredditsInput = {
+    where: AudienceWhereUniqueInput
+    create: XOR<AudienceCreateWithoutSubredditsInput, AudienceUncheckedCreateWithoutSubredditsInput>
+  }
+
+  export type AudienceUpsertWithWhereUniqueWithoutSubredditsInput = {
+    where: AudienceWhereUniqueInput
+    update: XOR<AudienceUpdateWithoutSubredditsInput, AudienceUncheckedUpdateWithoutSubredditsInput>
+    create: XOR<AudienceCreateWithoutSubredditsInput, AudienceUncheckedCreateWithoutSubredditsInput>
+  }
+
+  export type AudienceUpdateWithWhereUniqueWithoutSubredditsInput = {
+    where: AudienceWhereUniqueInput
+    data: XOR<AudienceUpdateWithoutSubredditsInput, AudienceUncheckedUpdateWithoutSubredditsInput>
+  }
+
+  export type AudienceUpdateManyWithWhereWithoutSubredditsInput = {
+    where: AudienceScalarWhereInput
+    data: XOR<AudienceUpdateManyMutationInput, AudienceUncheckedUpdateManyWithoutSubredditsInput>
+  }
+
   export type AudienceCreateManyUserInput = {
     id?: string
     title: string
     searchTerm?: string
-    subreddits?: AudienceCreatesubredditsInput | string[]
     createdAt?: Date | string
   }
 
@@ -4042,24 +5733,74 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subreddits?: SubredditUpdateManyWithoutAudiencesNestedInput
   }
 
   export type AudienceUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subreddits?: SubredditUncheckedUpdateManyWithoutAudiencesNestedInput
   }
 
   export type AudienceUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     searchTerm?: StringFieldUpdateOperationsInput | string
-    subreddits?: AudienceUpdatesubredditsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubredditUpdateWithoutAudiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubredditUncheckedUpdateWithoutAudiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubredditUncheckedUpdateManyWithoutAudiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subscribers?: IntFieldUpdateOperationsInput | number
+    icon?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AudienceUpdateWithoutSubredditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAudiencesNestedInput
+  }
+
+  export type AudienceUncheckedUpdateWithoutSubredditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AudienceUncheckedUpdateManyWithoutSubredditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    searchTerm?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -29,13 +29,25 @@ model User {
 }
 
 model Audience {
-  id         String   @id @default(uuid())
+  id         String      @id @default(uuid())
   title      String
-  searchTerm String   @default("")
-  subreddits String[]
-  createdAt  DateTime @default(now())
+  searchTerm String      @default("")
+  createdAt  DateTime    @default(now())
   userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User        @relation(fields: [userId], references: [id])
+  subreddits Subreddit[]
 
   @@map("audiences")
+}
+
+model Subreddit {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  title       String
+  subscribers Int
+  icon        String
+  url         String
+  audiences   Audience[]
+
+  @@map("subreddits")
 }
