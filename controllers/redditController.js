@@ -1,5 +1,6 @@
 const { default: fetch } = require("node-fetch");
 const { userAgent, clientId, clientSecret } = require("../utils/redditClient");
+const { classifyPainPoints } = require("../utils/painClassifier");
 
 const getAccessToken = async () => {
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString(
@@ -23,33 +24,10 @@ const getAccessToken = async () => {
 const fetchPost = async (req, res) => {
   const sort = req.body.sort || "hot";
   const subs = req.body.subreddits;
-  const painKeywords = [
-    "i hate",
-    "so frustrating",
-    "i struggle with",
-    "why is it so hard",
-    "it sucks when",
-    "dealing with",
-    "i can't",
-    "i wish",
-    "i'm so mad",
-    "i'm angry",
-    "this always happens",
-    "drives me crazy",
-    "can't stand",
-    "pisses me off",
-    "how do you deal with",
-    "what's the best way to",
-    "how can i",
-    "any advice",
-    "what should i do",
-    "anyone else dealing with",
-  ];
-
   const token = await getAccessToken();
   const subredditPromises = subs.map(async (sub) => {
     const redditRes = await fetch(
-      `https://oauth.reddit.com/r/${sub.name}/${sort}?limit=50`,
+      `https://oauth.reddit.com/r/${sub.name}/${sort}?limit=100`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,15 +41,11 @@ const fetchPost = async (req, res) => {
       return [];
     }
 
-    const filteredPosts =
+    return (
       data?.data?.children
         ?.filter((post) => {
-          const { title, selftext, author, distinguished } = post.data;
-          if (author === "AutoModerator" || distinguished === "moderator")
-            return false;
-
-          const content = `${title} ${selftext}`.toLowerCase();
-          return painKeywords.some((kw) => content.includes(kw));
+          const { author, distinguished } = post.data;
+          return author !== "AutoModerator" && distinguished !== "moderator";
         })
         .map((post) => ({
           title: post.data.title,
@@ -82,15 +56,16 @@ const fetchPost = async (req, res) => {
           author: post.data.author,
           flair: post.data.link_flair_text,
           selftext: post.data.selftext,
-        })) || [];
-
-    return filteredPosts;
+        })) || []
+    );
   });
 
   const allPostsArrays = await Promise.all(subredditPromises);
   const allPosts = allPostsArrays.flat();
 
-  return res.json(allPosts);
+  const filteredPosts = await classifyPainPoints(allPosts);
+
+  return res.json(filteredPosts);
 };
 
 // Fetch specific subreddits

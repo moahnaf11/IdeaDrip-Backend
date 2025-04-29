@@ -38,13 +38,6 @@ export default defineConfig([
     },
     rules: {
       ...js.configs.recommended.rules,
-      "capitalized-comments": [
-        "error",
-        "always",
-        {
-          ignorePattern: "pragma|ignored",
-        },
-      ],
       "no-unused-vars": ["error", { argsIgnorePattern: "_" }],
     },
   },
