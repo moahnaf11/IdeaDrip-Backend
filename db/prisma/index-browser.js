@@ -145,6 +145,26 @@ exports.Prisma.SubredditScalarFieldEnum = {
   url: 'url'
 };
 
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  url: 'url',
+  upvotes: 'upvotes',
+  comments: 'comments',
+  author: 'author',
+  flair: 'flair',
+  selftext: 'selftext',
+  fetchedAt: 'fetchedAt',
+  subredditId: 'subredditId'
+};
+
+exports.Prisma.SavedPostScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  savedAt: 'savedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -164,7 +184,9 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   Audience: 'Audience',
-  Subreddit: 'Subreddit'
+  Subreddit: 'Subreddit',
+  Post: 'Post',
+  SavedPost: 'SavedPost'
 };
 
 /**

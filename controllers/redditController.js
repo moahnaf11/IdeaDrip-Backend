@@ -1,6 +1,10 @@
 const { default: fetch } = require("node-fetch");
 const { userAgent, clientId, clientSecret } = require("../utils/redditClient");
 const { classifyPainPoints } = require("../utils/painClassifier");
+const {
+  getExistingPosts,
+  saveClassified,
+} = require("../prisma/queries/postQueries");
 
 const getAccessToken = async () => {
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString(
@@ -61,11 +65,21 @@ const fetchPost = async (req, res) => {
   });
 
   const allPostsArrays = await Promise.all(subredditPromises);
+  // fetch posts from db
   const allPosts = allPostsArrays.flat();
+  const urls = allPosts.map((post) => post.url);
+  const existing = await getExistingPosts(urls);
+  console.log("existing", existing.length);
+  const existingUrls = new Set(existing.map((p) => p.url));
 
-  const filteredPosts = await classifyPainPoints(allPosts);
+  const newPosts = allPosts.filter((post) => !existingUrls.has(post.url));
+  console.log("newPosts", newPosts.length);
 
-  return res.json(filteredPosts);
+  const filteredPosts = await classifyPainPoints(newPosts);
+  // save filtered posts in db after classify
+  await saveClassified(filteredPosts);
+
+  return res.json([...existing, ...filteredPosts]);
 };
 
 // Fetch specific subreddits
@@ -90,23 +104,17 @@ const fetchSpecificSubs = async (req, res) => {
   const data = await response.json();
 
   // Extract and map relevant subreddit fields
-  const subreddits = data.data.children
-    .map((item) => {
-      const sub = item.data;
-      return {
-        name: sub.display_name,
-        title: sub.title,
-        subscribers: sub.subscribers,
-        icon: sub.icon_img || sub.community_icon || "".split("?")[0],
-        description: sub.public_description,
-        url: `https://reddit.com${sub.url}`,
-      };
-    })
-    .filter(
-      (sub) =>
-        sub.title.toLowerCase().includes(query) ||
-        sub.description.toLowerCase().includes(query),
-    );
+  const subreddits = data.data.children.map((item) => {
+    const sub = item.data;
+    return {
+      name: sub.display_name,
+      title: sub.title,
+      subscribers: sub.subscribers,
+      icon: (sub.icon_img || sub.community_icon || "").split("?")[0],
+      description: sub.public_description,
+      url: `https://reddit.com${sub.url}`,
+    };
+  });
 
   return res.json(subreddits);
 };

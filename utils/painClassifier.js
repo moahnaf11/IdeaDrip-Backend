@@ -1,16 +1,9 @@
 const { default: fetch } = require("node-fetch");
 
-const labels = [
-  "frustration",
-  "pain",
-  "anger",
-  "help",
-  "struggle",
-  "complaint",
-];
+const labels = ["frustration", "pain", "anger", "help"];
 
 async function classifyPainPoints(posts = []) {
-  const batchSize = 20;
+  const batchSize = 100;
   const concurrencyLimit = 3; // How many batches at once
   const batches = [];
 
@@ -20,7 +13,7 @@ async function classifyPainPoints(posts = []) {
 
     const textToPostMap = new Map();
     const texts = batch.map((post) => {
-      const text = `${post.title || ""} ${post.selftext || ""}`.slice(0, 1024);
+      const text = `${post.title || ""} ${post.selftext || ""}`;
       textToPostMap.set(text, post);
       return text;
     });
@@ -28,8 +21,8 @@ async function classifyPainPoints(posts = []) {
     const body = {
       texts,
       labels,
-      threshold: 0.5,
-      min_labels_required: 3,
+      threshold: 0.8,
+      min_labels_required: 2,
     };
 
     const batchIndex = i / batchSize;
@@ -38,14 +31,11 @@ async function classifyPainPoints(posts = []) {
     const batchFunction = async () => {
       console.time(batchLabel);
       try {
-        const res = await fetch(
-          "https://abe9-34-91-244-222.ngrok-free.app/classify",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          },
-        );
+        const res = await fetch("http://localhost:8000/classify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
         if (!res.ok) {
           const errorText = await res.text();
@@ -53,14 +43,15 @@ async function classifyPainPoints(posts = []) {
         }
 
         const { results: classified } = await res.json();
-        console.timeEnd(batchLabel);
+
         return classified
           .map(({ text }) => textToPostMap.get(text))
           .filter(Boolean);
       } catch (err) {
         console.error(`Batch error (${batchLabel}):`, err.message);
-        console.timeEnd(batchLabel);
         return [];
+      } finally {
+        console.timeEnd(batchLabel);
       }
     };
 
