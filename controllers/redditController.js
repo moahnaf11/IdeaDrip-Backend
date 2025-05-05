@@ -4,6 +4,7 @@ const { classifyPainPoints } = require("../utils/painClassifier");
 const {
   getExistingPosts,
   saveClassified,
+  getSavedPostsForUserInSubs,
 } = require("../prisma/queries/postQueries");
 
 const getAccessToken = async () => {
@@ -75,11 +76,22 @@ const fetchPost = async (req, res) => {
   const newPosts = allPosts.filter((post) => !existingUrls.has(post.url));
   console.log("newPosts", newPosts.length);
 
-  const filteredPosts = await classifyPainPoints(newPosts);
-  // save filtered posts in db after classify
-  await saveClassified(filteredPosts);
+  let savedPain = [];
+  if (newPosts.length > 0) {
+    const filteredResults = await classifyPainPoints(newPosts);
+    const allPassed = filteredResults.flatMap((result) => result.passed);
+    const allFailed = filteredResults.flatMap((result) => result.failed);
+    savedPain = await saveClassified(allPassed, true);
+    await saveClassified(allFailed, false);
+  }
+  const presave = await getSavedPostsForUserInSubs(req.user.id, subs);
 
-  return res.json([...existing, ...filteredPosts]);
+  const painPostsToShow = [...existing.filter((p) => p.isPain), ...savedPain];
+
+  return res.json({
+    posts: painPostsToShow,
+    saved: presave.map((sp) => sp.post.id),
+  });
 };
 
 // Fetch specific subreddits

@@ -9,6 +9,7 @@ const { PrismaClientKnownRequestError } = require("@prisma/client");
 const { userRouter } = require("./routes/userRouter");
 const { redditRouter } = require("./routes/redditRouter");
 const { audienceRouter } = require("./routes/audienceRouter");
+const { postRouter } = require("./routes/postRouter");
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routers
 app.use("/users", userRouter);
 app.use("/audience", audienceRouter);
+app.use("/post", postRouter);
 app.use("/api/reddit", redditRouter);
 
 // Error handler middleware

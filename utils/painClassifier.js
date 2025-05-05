@@ -44,12 +44,19 @@ async function classifyPainPoints(posts = []) {
 
         const { results: classified } = await res.json();
 
-        return classified
+        // Passed: posts that matched classification
+        const passed = classified
           .map(({ text }) => textToPostMap.get(text))
           .filter(Boolean);
+
+        // Failed: all others in batch that didn't match
+        const passedSet = new Set(passed.map((p) => p.url));
+        const failed = batch.filter((post) => !passedSet.has(post.url));
+
+        return { passed, failed };
       } catch (err) {
         console.error(`Batch error (${batchLabel}):`, err.message);
-        return [];
+        return { passed: [], failed: [] };
       } finally {
         console.timeEnd(batchLabel);
       }
@@ -65,7 +72,7 @@ async function classifyPainPoints(posts = []) {
 
     for (const batch of batches) {
       const p = batch().then((result) => {
-        results.push(...result);
+        results.push(result);
       });
       executing.push(p);
 

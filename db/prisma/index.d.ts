@@ -4776,6 +4776,7 @@ export namespace Prisma {
     flair: string | null
     selftext: string | null
     fetchedAt: Date | null
+    isPain: boolean | null
     subredditId: string | null
   }
 
@@ -4789,6 +4790,7 @@ export namespace Prisma {
     flair: string | null
     selftext: string | null
     fetchedAt: Date | null
+    isPain: boolean | null
     subredditId: string | null
   }
 
@@ -4802,6 +4804,7 @@ export namespace Prisma {
     flair: number
     selftext: number
     fetchedAt: number
+    isPain: number
     subredditId: number
     _all: number
   }
@@ -4827,6 +4830,7 @@ export namespace Prisma {
     flair?: true
     selftext?: true
     fetchedAt?: true
+    isPain?: true
     subredditId?: true
   }
 
@@ -4840,6 +4844,7 @@ export namespace Prisma {
     flair?: true
     selftext?: true
     fetchedAt?: true
+    isPain?: true
     subredditId?: true
   }
 
@@ -4853,6 +4858,7 @@ export namespace Prisma {
     flair?: true
     selftext?: true
     fetchedAt?: true
+    isPain?: true
     subredditId?: true
     _all?: true
   }
@@ -4953,6 +4959,7 @@ export namespace Prisma {
     flair: string | null
     selftext: string | null
     fetchedAt: Date
+    isPain: boolean | null
     subredditId: string
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
@@ -4985,6 +4992,7 @@ export namespace Prisma {
     flair?: boolean
     selftext?: boolean
     fetchedAt?: boolean
+    isPain?: boolean
     subredditId?: boolean
     subreddit?: boolean | SubredditDefaultArgs<ExtArgs>
     savedByUsers?: boolean | Post$savedByUsersArgs<ExtArgs>
@@ -5001,6 +5009,7 @@ export namespace Prisma {
     flair?: boolean
     selftext?: boolean
     fetchedAt?: boolean
+    isPain?: boolean
     subredditId?: boolean
     subreddit?: boolean | SubredditDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
@@ -5015,6 +5024,7 @@ export namespace Prisma {
     flair?: boolean
     selftext?: boolean
     fetchedAt?: boolean
+    isPain?: boolean
     subredditId?: boolean
     subreddit?: boolean | SubredditDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
@@ -5029,10 +5039,11 @@ export namespace Prisma {
     flair?: boolean
     selftext?: boolean
     fetchedAt?: boolean
+    isPain?: boolean
     subredditId?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "url" | "upvotes" | "comments" | "author" | "flair" | "selftext" | "fetchedAt" | "subredditId", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "url" | "upvotes" | "comments" | "author" | "flair" | "selftext" | "fetchedAt" | "isPain" | "subredditId", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subreddit?: boolean | SubredditDefaultArgs<ExtArgs>
     savedByUsers?: boolean | Post$savedByUsersArgs<ExtArgs>
@@ -5061,6 +5072,7 @@ export namespace Prisma {
       flair: string | null
       selftext: string | null
       fetchedAt: Date
+      isPain: boolean | null
       subredditId: string
     }, ExtArgs["result"]["post"]>
     composites: {}
@@ -5496,6 +5508,7 @@ export namespace Prisma {
     readonly flair: FieldRef<"Post", 'String'>
     readonly selftext: FieldRef<"Post", 'String'>
     readonly fetchedAt: FieldRef<"Post", 'DateTime'>
+    readonly isPain: FieldRef<"Post", 'Boolean'>
     readonly subredditId: FieldRef<"Post", 'String'>
   }
     
@@ -7049,6 +7062,7 @@ export namespace Prisma {
     flair: 'flair',
     selftext: 'selftext',
     fetchedAt: 'fetchedAt',
+    isPain: 'isPain',
     subredditId: 'subredditId'
   };
 
@@ -7133,6 +7147,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -7362,6 +7383,7 @@ export namespace Prisma {
     flair?: StringNullableFilter<"Post"> | string | null
     selftext?: StringNullableFilter<"Post"> | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
+    isPain?: BoolNullableFilter<"Post"> | boolean | null
     subredditId?: StringFilter<"Post"> | string
     subreddit?: XOR<SubredditScalarRelationFilter, SubredditWhereInput>
     savedByUsers?: SavedPostListRelationFilter
@@ -7377,6 +7399,7 @@ export namespace Prisma {
     flair?: SortOrderInput | SortOrder
     selftext?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
+    isPain?: SortOrderInput | SortOrder
     subredditId?: SortOrder
     subreddit?: SubredditOrderByWithRelationInput
     savedByUsers?: SavedPostOrderByRelationAggregateInput
@@ -7395,6 +7418,7 @@ export namespace Prisma {
     flair?: StringNullableFilter<"Post"> | string | null
     selftext?: StringNullableFilter<"Post"> | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
+    isPain?: BoolNullableFilter<"Post"> | boolean | null
     subredditId?: StringFilter<"Post"> | string
     subreddit?: XOR<SubredditScalarRelationFilter, SubredditWhereInput>
     savedByUsers?: SavedPostListRelationFilter
@@ -7410,6 +7434,7 @@ export namespace Prisma {
     flair?: SortOrderInput | SortOrder
     selftext?: SortOrderInput | SortOrder
     fetchedAt?: SortOrder
+    isPain?: SortOrderInput | SortOrder
     subredditId?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
@@ -7431,6 +7456,7 @@ export namespace Prisma {
     flair?: StringNullableWithAggregatesFilter<"Post"> | string | null
     selftext?: StringNullableWithAggregatesFilter<"Post"> | string | null
     fetchedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
+    isPain?: BoolNullableWithAggregatesFilter<"Post"> | boolean | null
     subredditId?: StringWithAggregatesFilter<"Post"> | string
   }
 
@@ -7713,6 +7739,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     subreddit: SubredditCreateNestedOneWithoutPostsInput
     savedByUsers?: SavedPostCreateNestedManyWithoutPostInput
   }
@@ -7727,6 +7754,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     subredditId: string
     savedByUsers?: SavedPostUncheckedCreateNestedManyWithoutPostInput
   }
@@ -7741,6 +7769,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subreddit?: SubredditUpdateOneRequiredWithoutPostsNestedInput
     savedByUsers?: SavedPostUpdateManyWithoutPostNestedInput
   }
@@ -7755,6 +7784,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subredditId?: StringFieldUpdateOperationsInput | string
     savedByUsers?: SavedPostUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -7769,6 +7799,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     subredditId: string
   }
 
@@ -7782,6 +7813,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -7794,6 +7826,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subredditId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -8104,6 +8137,11 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type SubredditScalarRelationFilter = {
     is?: SubredditWhereInput
     isNot?: SubredditWhereInput
@@ -8119,6 +8157,7 @@ export namespace Prisma {
     flair?: SortOrder
     selftext?: SortOrder
     fetchedAt?: SortOrder
+    isPain?: SortOrder
     subredditId?: SortOrder
   }
 
@@ -8137,6 +8176,7 @@ export namespace Prisma {
     flair?: SortOrder
     selftext?: SortOrder
     fetchedAt?: SortOrder
+    isPain?: SortOrder
     subredditId?: SortOrder
   }
 
@@ -8150,12 +8190,21 @@ export namespace Prisma {
     flair?: SortOrder
     selftext?: SortOrder
     fetchedAt?: SortOrder
+    isPain?: SortOrder
     subredditId?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
     upvotes?: SortOrder
     comments?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type PostScalarRelationFilter = {
@@ -8445,6 +8494,10 @@ export namespace Prisma {
     connect?: SavedPostWhereUniqueInput | SavedPostWhereUniqueInput[]
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type SubredditUpdateOneRequiredWithoutPostsNestedInput = {
     create?: XOR<SubredditCreateWithoutPostsInput, SubredditUncheckedCreateWithoutPostsInput>
     connectOrCreate?: SubredditCreateOrConnectWithoutPostsInput
@@ -8643,6 +8696,19 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type AudienceCreateWithoutUserInput = {
@@ -8894,6 +8960,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     savedByUsers?: SavedPostCreateNestedManyWithoutPostInput
   }
 
@@ -8907,6 +8974,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     savedByUsers?: SavedPostUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -8965,6 +9033,7 @@ export namespace Prisma {
     flair?: StringNullableFilter<"Post"> | string | null
     selftext?: StringNullableFilter<"Post"> | string | null
     fetchedAt?: DateTimeFilter<"Post"> | Date | string
+    isPain?: BoolNullableFilter<"Post"> | boolean | null
     subredditId?: StringFilter<"Post"> | string
   }
 
@@ -9101,6 +9170,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     subreddit: SubredditCreateNestedOneWithoutPostsInput
   }
 
@@ -9114,6 +9184,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
     subredditId: string
   }
 
@@ -9178,6 +9249,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subreddit?: SubredditUpdateOneRequiredWithoutPostsNestedInput
   }
 
@@ -9191,6 +9263,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subredditId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -9287,6 +9360,7 @@ export namespace Prisma {
     flair?: string | null
     selftext?: string | null
     fetchedAt?: Date | string
+    isPain?: boolean | null
   }
 
   export type AudienceUpdateWithoutSubredditsInput = {
@@ -9323,6 +9397,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     savedByUsers?: SavedPostUpdateManyWithoutPostNestedInput
   }
 
@@ -9336,6 +9411,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
     savedByUsers?: SavedPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -9349,6 +9425,7 @@ export namespace Prisma {
     flair?: NullableStringFieldUpdateOperationsInput | string | null
     selftext?: NullableStringFieldUpdateOperationsInput | string | null
     fetchedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPain?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type SavedPostCreateManyPostInput = {

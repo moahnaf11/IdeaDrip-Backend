@@ -17,24 +17,28 @@ userRouter.get(
     res.status(200).json({ user: req.user });
   },
 );
-userRouter.get("/logout", async (req, res) => {
-  const refreshToken = req.cookies["refreshToken"];
-  if (req.cookies["jwt"] || refreshToken) {
-    res.clearCookie("jwt").clearCookie("refreshToken").status(200).json({
-      msg: "You have logged out",
-    });
-  } else {
-    res.status(401).json({
-      msg: "Invalid jwt",
-    });
-  }
-  jwt.verify(refreshToken, process.env.JWT_SECRET, async (err, decoded) => {
-    if (err) {
-      res.status(401).json({ msg: "Invalid or expired token" });
+userRouter.get(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const refreshToken = req.cookies["refreshToken"];
+    if (req.cookies["jwt"] || refreshToken) {
+      res.clearCookie("jwt").clearCookie("refreshToken").status(200).json({
+        msg: "You have logged out",
+      });
+    } else {
+      res.status(401).json({
+        msg: "Invalid jwt",
+      });
     }
-    await updateRefreshToken(decoded.id, null);
-  });
-});
+    jwt.verify(refreshToken, process.env.JWT_SECRET, async (err, decoded) => {
+      if (err) {
+        res.status(401).json({ msg: "Invalid or expired token" });
+      }
+      await updateRefreshToken(decoded.id, null);
+    });
+  },
+);
 
 userRouter.get("/refresh", async (req, res) => {
   const token = req.cookies.refreshToken;

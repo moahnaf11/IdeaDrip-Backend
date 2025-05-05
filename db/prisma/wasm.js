@@ -155,6 +155,7 @@ exports.Prisma.PostScalarFieldEnum = {
   flair: 'flair',
   selftext: 'selftext',
   fetchedAt: 'fetchedAt',
+  isPain: 'isPain',
   subredditId: 'subredditId'
 };
 
