@@ -2,94 +2,86 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
-import numpy as np
 import time
 import os
 
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 app = FastAPI()
 
-# Load model and tokenizer once
-MODEL_NAME = "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
+# Load emotion model
+MODEL_NAME = "j-hartmann/emotion-english-distilroberta-base"
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model = AutoModelForSequenceClassification.from_pretrained(
-    MODEL_NAME, torch_dtype=torch.float16
+    MODEL_NAME, torch_dtype=torch.bfloat16
 )
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 model.eval()
-print("Model loaded on:", device)
+print("Emotion model loaded on:", device)
+
+# Label mappings
+id2label = model.config.id2label
+label2id = {v: k for k, v in id2label.items()}
+
+# We're only interested in these two emotions
+TARGET_LABELS = ["anger", "disgust"]
+TARGET_INDICES = [label2id[label] for label in TARGET_LABELS]
 
 
-class ClassificationRequest(BaseModel):
+class EmotionRequest(BaseModel):
     texts: list[str]
-    labels: list[str]
-    threshold: float = 0.7
-    min_labels_required: int = 3
+    threshold: float = 0.85
 
 
 @app.post("/classify", response_model=dict)
-async def classify(req: ClassificationRequest):
+async def classify_emotions(req: EmotionRequest):
     start_time = time.perf_counter()
-    texts, labels = req.texts, req.labels
-    num_texts, num_labels = len(texts), len(labels)
-
-    if not texts or not labels:
-        return {"results": []}
-    total_pairs = num_texts * num_labels
-    print(
-        f"🔢 Processing {num_texts} texts × {num_labels} labels = {total_pairs} pairs"
-    )
-
-    # Prepare inputs in chunks to avoid OOM
+    texts = req.texts
     results = []
-    batch_size = 16  # smaller to avoid OOM on 6GB GPU
+    batch_size = 16
+
+    if not texts:
+        return {"results": []}
 
     with torch.no_grad():
-        for i in range(0, num_texts, batch_size):
-            chunk_texts = texts[i : i + batch_size]
-            chunk_results = []
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i : i + batch_size]
+            inputs = tokenizer(
+                batch,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=512,
+            )
+            inputs = {k: v.to(device) for k, v in inputs.items()}
 
-            # For each text in the chunk, pair with all labels
-            for text in chunk_texts:
-                premise_batch = [text] * num_labels
-                hypothesis_batch = labels
+            with torch.amp.autocast(device_type="cuda"):
+                logits = model(**inputs).logits
 
-                # Tokenize and move to device
-                inputs = tokenizer(
-                    premise_batch,
-                    hypothesis_batch,
-                    return_tensors="pt",
-                    padding=True,
-                    truncation=True,
-                    max_length=512,
-                )
-                inputs = {k: v.to(device) for k, v in inputs.items()}
+            probs = torch.softmax(logits, dim=-1).cpu().numpy()
 
-                # Forward pass with float16 autocast
-                with torch.amp.autocast(device_type="cuda"):
-                    logits = model(**inputs).logits
+            for text, prob in zip(batch, probs):
+                emotion_scores = {
+                    id2label[idx]: prob[idx]
+                    for idx in TARGET_INDICES
+                    if prob[idx] > req.threshold
+                }
 
-                probs = (
-                    torch.softmax(logits, dim=1)[:, 2].cpu().numpy()
-                )  # entailment class
-                selected_labels = [
-                    label
-                    for label, score in zip(labels, probs)
-                    if score >= req.threshold
-                ]
-
-                if len(selected_labels) >= req.min_labels_required:
-                    chunk_results.append({"text": text, "labels": selected_labels})
-
-                # Optional: free up memory
-                torch.cuda.empty_cache()
-
-            results.extend(chunk_results)
-            print(f"returned {len(results)}")
+                if emotion_scores:
+                    # Get the emotion with the highest score
+                    top_emotion = max(emotion_scores.items(), key=lambda x: x[1])
+                    results.append(
+                        {
+                            "text": text,
+                            "emotion": {
+                                "label": top_emotion[0],
+                                "score": round(float(top_emotion[1]), 4),
+                            },
+                        }
+                    )
 
     elapsed = time.perf_counter() - start_time
-    print(f"Inference for {num_texts} texts took {elapsed:.2f}s")
-
+    print(f"Filtered {len(results)} of {len(texts)} texts in {elapsed:.2f}s")
+    print(results)
     return {"results": results}

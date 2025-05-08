@@ -1,6 +1,5 @@
 const { default: fetch } = require("node-fetch");
-
-const labels = ["frustration", "pain", "anger", "help"];
+const { sanitizeRedditText } = require("./helperFunctions");
 
 async function classifyPainPoints(posts = []) {
   const batchSize = 100;
@@ -13,16 +12,16 @@ async function classifyPainPoints(posts = []) {
 
     const textToPostMap = new Map();
     const texts = batch.map((post) => {
-      const text = `${post.title || ""} ${post.selftext || ""}`;
+      const text = sanitizeRedditText(
+        `${post.title || ""} ${post.selftext || ""}`,
+      );
       textToPostMap.set(text, post);
       return text;
     });
 
     const body = {
       texts,
-      labels,
-      threshold: 0.8,
-      min_labels_required: 2,
+      threshold: 0.85,
     };
 
     const batchIndex = i / batchSize;
