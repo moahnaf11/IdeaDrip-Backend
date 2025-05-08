@@ -3,6 +3,7 @@ const passport = require("../utils/passportConfig");
 const {
   toggleSavePost,
   getSavedPosts,
+  summarizeAndPitch,
 } = require("../controllers/postController");
 const postRouter = express.Router();
 
@@ -15,6 +16,11 @@ postRouter.get(
   "/saved",
   passport.authenticate("jwt", { session: false }),
   getSavedPosts,
+);
+postRouter.post(
+  "/summarize",
+  passport.authenticate("jwt", { session: false }),
+  summarizeAndPitch,
 );
 
 module.exports = { postRouter };

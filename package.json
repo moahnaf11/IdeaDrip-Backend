@@ -33,6 +33,7 @@
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "node-fetch": "^3.3.2",
+    "openai": "^4.97.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
